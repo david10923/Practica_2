@@ -1,5 +1,3 @@
-
-hola
 #include"casilla.h"
 #include<string>
 #include <iostream>
