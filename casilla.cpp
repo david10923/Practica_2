@@ -1,5 +1,5 @@
 
-
+hola
 #include"casilla.h"
 #include<string>
 #include <iostream>
@@ -64,7 +64,7 @@ void dibujaCasilla(const tCasilla & casilla) {
 
 }
 
-bool esSimple(const tCasilla & casilla, int &numero) {// revisar ?¿ esUnitario 
+bool esSimple(const tCasilla & casilla, int &numero) {// revisar ?Â¿ esUnitario 
 
 	bool ok = false;
 	int numero1;
