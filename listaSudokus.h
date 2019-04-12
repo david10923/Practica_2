@@ -35,5 +35,9 @@ bool buscarFichero(tListaSudokus & lista, string nombreFich);
 int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku);
 
 bool operator >(tSudoku izda, tSudoku dcha);
+void moverLista(tListaSudokus & lista, int posMover);
+
+
+
 
 #endif
