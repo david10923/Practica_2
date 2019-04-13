@@ -62,7 +62,7 @@ void dibujaCasilla(const tCasilla & casilla) {
 
 }
 
-bool esSimple(const tCasilla & casilla, int &numero) {// revisar ?Â¿ esUnitario 
+bool esSimple(const tCasilla & casilla, int &numero) {// revisar ?¿ esUnitario 
 
 	bool ok = false;
 	int numero1;
