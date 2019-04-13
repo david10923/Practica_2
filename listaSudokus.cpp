@@ -108,18 +108,19 @@ bool cargarSudoku(const tListaSudokus & lista, tSudoku & sudoku) {
 }
 */
 
-
 void moverLista(tListaSudokus & lista, int posMover) {
 
-	for (int i = lista.cont+1; i < posMover;i--) { // empiezas en el contador +1 y mueves las posiciones desde el final para insertar 
+	for (int i = lista.cont + 1; i < posMover; i--) { // empiezas en el contador +1 y mueves las posiciones desde el final para insertar 
 
 
-		lista.sudoku[i] = lista.sudoku[i-1];
-		
+		lista.sudoku[i] = lista.sudoku[i - 1];
+
 
 	}
 
 }
+
+
 
 bool registarSudoku(tListaSudokus & lista) {
 
@@ -143,12 +144,10 @@ bool registarSudoku(tListaSudokus & lista) {
 
 			posInsertar = buscarPos(lista, sudoku);
 
-			if (posInsertar != -1) {
+			if (posInsertar != -1) {			
 
-				//¿mover la posicion de la lista para luiego insertrar?
-				// ¿hacer una funcion que me mueva la lista para poder insertar el sudoku en la posicion que yo quiero para que no machaque el valor anterior 
 
-				 moverLista(lista, posInsertar);
+				moverLista(lista, posInsertar);
 
 				lista.sudoku[posInsertar].nombreArchivo = nombre;
 				lista.sudoku[posInsertar].puntos = puntos;
@@ -156,7 +155,13 @@ bool registarSudoku(tListaSudokus & lista) {
 
 				lista.cont++;
 			}
-						
+
+
+			?
+
+
+
+
 		}
 
 
@@ -198,11 +203,11 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 		mitad = (ini + final) / 2;
 
 		if (lista.sudoku[mitad].puntos == sudoku.puntos && lista.sudoku[mitad].nombreArchivo == sudoku.nombreArchivo){
-			
+
 			encontrado = true;
 
 		}
-		else if (sudoku.puntos < lista.sudoku[mitad].puntos && sudoku.nombreArchivo < lista.sudoku[mitad].nombreArchivo {
+		else if (sudoku.puntos < lista.sudoku[mitad].puntos && lista.sudoku[mitad].nombreArchivo == sudoku.nombreArchivo){
 			final = mitad - 1;
 
 		}
@@ -217,7 +222,6 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 	return posicion;
 
 }
-//comparar el nombre del archivo tambien aqui ?? 
 
 bool  operator>(tSudoku izda, tSudoku dcha) {
 	return izda.nombreArchivo > dcha.nombreArchivo && izda.puntos > dcha.puntos;

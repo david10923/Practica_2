@@ -33,11 +33,9 @@ bool guardar(const tListaSudokus & lista);
 bool registarSudoku(tListaSudokus & lista);
 bool buscarFichero(tListaSudokus & lista, string nombreFich);
 int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku);
-
-bool operator >(tSudoku izda, tSudoku dcha);
 void moverLista(tListaSudokus & lista, int posMover);
 
 
-
+bool operator >(tSudoku izda, tSudoku dcha);
 
 #endif
