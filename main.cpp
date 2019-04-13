@@ -67,6 +67,7 @@ int main() {
 
 			break;
 		case 4:
+			registrarSudoku(lista);
 
 			break;
 

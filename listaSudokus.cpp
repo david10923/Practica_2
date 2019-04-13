@@ -98,15 +98,31 @@ bool cargarSudoku(const tListaSudokus & lista, tSudoku & sudoku) {
 
 
 
-/*bool guardar(const tListaSudokus & lista) {
+bool guardar(const tListaSudokus & lista) {
+	bool ok = false; 
+
+	ofstream archivo; 
+
+	archivo.open("listaSudokus.txt"); 
+
+	if (archivo.is_open()) {
+		ok = true; 
+
+
+		while (i < MAX_SUDOKUS && ok) {
+			archivo >> lista.sudoku[i].nombreArchivo; 
+			archivo >> lista.sudoku[i].puntos; 
 
 
 
+			i++;
 
-
-
+		}
+		archivo.close();
+	}
+	return ok; 
 }
-*/
+
 
 void moverLista(tListaSudokus & lista, int posMover) {
 
@@ -157,7 +173,7 @@ bool registarSudoku(tListaSudokus & lista) {
 			}
 
 
-			?
+			
 
 
 
@@ -166,6 +182,9 @@ bool registarSudoku(tListaSudokus & lista) {
 
 
 	}
+	
+	guardar(lista); 
+	mostrar(lista);
 	else {
 		cout << "Error, la lista ya ha alcanzado el maximo de sudokus permitidos " << endl;
 
