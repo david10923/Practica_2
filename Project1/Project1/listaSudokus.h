@@ -30,8 +30,8 @@ bool cargarSudoku(const tListaSudokus & lista, tSudoku &sudoku);
 //Version2
 
 bool guardar(const tListaSudokus & lista);
-bool registarSudoku(tListaSudokus & lista);
-bool buscarFichero(tListaSudokus & lista, string nombreFich);
+bool registrarSudoku(tListaSudokus & lista);
+bool buscarFichero(tListaSudokus & lista, std::string nombreFich);
 int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku);
 void moverLista(tListaSudokus & lista, int posMover);
 

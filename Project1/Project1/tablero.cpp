@@ -1,0 +1,262 @@
+#include"tablero.h"
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+
+
+
+void actualizaRegion(tTablero & tablero, int row, int col, int numero) {
+
+	int fila = row - row % 3;
+	int columna = col - col % 3;
+
+
+	for (int i = fila; i < fila + 3; i++) {
+		for (int j = columna; j < columna + 3; j++) {
+
+			borraElemento(tablero[i][j].conjunto, numero);
+		}
+	}
+
+}
+
+
+void actualizaRegionBorraNum(tTablero & tablero, int row, int col, int numero) {
+
+	int fila = row - row % 3;
+	int columna = col - col % 3;
+
+	for (int i = fila; i < fila + 3; i++) {
+		for (int j = columna; j < columna + 3; j++) {
+
+			annadeElemento(tablero[i][j].conjunto, numero);
+		}
+	}
+
+}
+
+
+void actualizaFilaCol(tTablero & tablero, int fila, int col, int numero) {
+	int i = 0; int j = 0;
+
+	while (j < DIM) {
+
+		borraElemento(tablero[fila][j].conjunto, numero);
+		j++;
+	}
+
+
+	while (i < DIM) {
+
+		borraElemento(tablero[i][col].conjunto, numero);
+		i++;
+	}
+
+}
+
+
+void actualizaFilaColBorraNum(tTablero & tablero, int fila, int col, int numero) {
+
+	int i = 0; int j = 0;
+
+	while (j < DIM) { // actualizas la fila 
+
+		annadeElemento(tablero[fila][j].conjunto, numero);
+		j++;
+	}
+
+	while (i < DIM) { // actualizas la columna 
+
+		annadeElemento(tablero[i][col].conjunto, numero);
+		i++;
+	}
+
+}
+
+
+void iniciaTablero(tTablero tablero) {
+
+	for (int i = 0; i < DIM; i++) {
+		for (int j = 0; j < DIM; j++) {
+			inicializaCasilla(tablero[i][j]);
+		}
+	}
+}
+
+
+bool cargarTablero(string nombreFichero, tTablero& tablero) {
+
+	iniciaTablero(tablero);
+
+
+	ifstream archivo;
+	bool ok = false;
+	char c;
+
+	archivo.open(nombreFichero);
+
+	if (archivo.is_open()) {
+		ok = true;
+
+		for (int i = 0; i < DIM; i++) {
+			for (int j = 0; j < DIM; j++) {
+				archivo.get(c);
+
+				if (c == '\n') { // hay que leer el salto de linea porque si no se descuadra el tablero 
+					archivo.get(c);
+
+				}
+				if (c >= '1' && c <= '9') {
+					rellenaCasilla(tablero[i][j], c, true);
+				}
+				else {
+					rellenaCasilla(tablero[i][j], c);
+
+				}
+
+				if (tablero[i][j].estado != vacia) {
+
+					actualizaFilaCol(tablero, i, j, tablero[i][j].numero);
+					actualizaRegion(tablero, i, j, tablero[i][j].numero);
+
+
+				}
+
+			}
+
+
+		}
+
+		archivo.close();
+	}
+
+
+	return ok;
+}
+
+
+void dibujarTablero(const tTablero & tablero) {
+
+	for (int i = 0; i < DIM; i++) {
+		for (int j = 0; j < DIM; j++) {
+
+			dibujaCasilla(tablero[i][j]);
+
+
+			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija)
+				cout << " " << tablero[i][j].numero;
+			else {
+				colorFondo(15);
+				cout << "  ";
+			}
+
+
+		}
+		cout << endl;
+	}
+
+	colorFondo(0);
+	cout << endl;
+
+}
+
+
+bool ponerNum(tTablero & tablero, int fila, int col, int c) {
+
+	bool posible = false;
+
+
+	if (tablero[fila][col].estado == vacia && pertenece(tablero[fila][col].conjunto, c)) {
+		posible = true;
+
+
+		actualizaFilaCol(tablero, fila, col, c);
+		actualizaRegion(tablero, fila, col, c);
+		cjto_lleno(tablero[fila][col].conjunto);
+		annadeElemento(tablero[fila][col].conjunto, c);
+		tablero[fila][col].estado = rellenada;
+		tablero[fila][col].numero = c;
+
+
+	}
+	else {
+		cout << "Ese numero no pertence al intervalo posible de valores de la casilla" << endl;
+
+	}
+
+
+	return posible;
+
+}
+
+
+bool borrarNum(tTablero & tablero, int fila, int col) {
+
+	bool posible = false;
+	int c = tablero[fila][col].numero;
+
+	if (tablero[fila][col].estado == rellenada) {
+		posible = true;
+
+		actualizaFilaColBorraNum(tablero, fila, col, c);
+		actualizaRegionBorraNum(tablero, fila, col, c);
+		annadeElemento(tablero[fila][col].conjunto, c);
+
+		tablero[fila][col].estado = vacia;
+
+	}
+	return posible;
+}
+
+
+bool tableroLLeno(const tTablero & tablero) {
+	bool lleno = false;
+
+	for (int i = 0; i < DIM; i++) {
+		for (int j = 0; j < DIM; j++) { // cjto lleno ??
+			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija) {
+				lleno = true;
+
+			}
+
+
+		}
+	}
+
+	return lleno;
+
+}
+
+
+void mostrarPosibles(const tTablero & tablero, int fila, int col) {
+
+	mostrar(tablero[fila][col].conjunto);
+
+
+}
+
+
+void rellenarSimples(tTablero& tablero) {
+	int numero;
+
+	for (int i = 0; i < DIM; i++) { // recorre el tablero 
+		for (int j = 0; j < DIM; j++) {
+
+			if (esSimple(tablero[i][j], numero) == true) { // si la casilla vacia tiene un unico valor posible
+				tablero[i][j].numero = numero;
+				tablero[i][j].estado = rellenada;
+
+				actualizaRegion(tablero, i, j, numero); // actualiza los posibles valores de la region 
+				actualizaFilaCol(tablero, i, j, numero);// actualiza las filas y columnas 
+
+
+			}
+		}
+	}
+
+
+
+
+}
+
