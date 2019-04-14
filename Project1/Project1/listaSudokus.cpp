@@ -81,7 +81,7 @@ bool cargarSudoku(const tListaSudokus & lista, tSudoku & sudoku) {
 	cin >> nombre;
 	cout << endl;
 
-	while ((i < MAX_SUDOKUS) && (!ok)) {
+	while ((i < lista.cont) && (!ok)) {
 
 		if (lista.sudoku[i].nombreArchivo == nombre) { // poner nombre donde pone sudoku1.txt
 			ok = true;
@@ -113,7 +113,7 @@ bool guardar(const tListaSudokus & lista) {
 		while (i < MAX_SUDOKUS && ok) {
 			archivo << lista.sudoku[i].nombreArchivo; 
 			archivo << lista.sudoku[i].puntos; 
-
+			archivo << endl;
 
 
 			i++;
@@ -135,6 +135,8 @@ void moverLista(tListaSudokus & lista, int posMover) {
 
 	}
 
+
+
 }
 
 
@@ -147,9 +149,12 @@ bool registrarSudoku(tListaSudokus & lista) {
 	tSudoku sudoku;
 
 
-	cout << "Introduce los datos del nuevo sudoku (nombre del fichero y numero de puntos que permite conseguir";
+	cout << "Introduce los datos del nuevo sudoku (nombre del fichero y numero de puntos que permite conseguir : ";
 	cin >> nombre >> puntos;
 	cout << endl;
+	
+	cout << lista.cont; 
+
 
 	if (lista.cont < MAX_SUDOKUS) {
 
@@ -168,7 +173,7 @@ bool registrarSudoku(tListaSudokus & lista) {
 
 				lista.sudoku[posInsertar].nombreArchivo = nombre;
 				lista.sudoku[posInsertar].puntos = puntos;
-
+			
 
 				lista.cont++;
 			}
