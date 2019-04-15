@@ -65,6 +65,7 @@ void mostrar(const tListaSudokus & lista) {
 	while (i < lista.cont) {
 		cout << lista.sudoku[i].nombreArchivo << " " << lista.sudoku[i].puntos << endl;
 
+		cout << lista.cont;
 		i++;
 	}
 
@@ -112,6 +113,7 @@ bool guardar(const tListaSudokus & lista) {
 
 		while (i < MAX_SUDOKUS && ok) {
 			archivo << lista.sudoku[i].nombreArchivo; 
+			archivo << " ";
 			archivo << lista.sudoku[i].puntos; 
 			archivo << endl;
 
@@ -128,11 +130,8 @@ bool guardar(const tListaSudokus & lista) {
 void moverLista(tListaSudokus & lista, int posMover) {
 
 	for (int i = lista.cont + 1; i < posMover; i--) { // empiezas en el contador +1 y mueves las posiciones desde el final para insertar 
-
-
 		lista.sudoku[i] = lista.sudoku[i - 1];
-
-
+		
 	}
 
 
@@ -148,13 +147,14 @@ bool registrarSudoku(tListaSudokus & lista) {
 	bool ok = false;
 	tSudoku sudoku;
 
+	cargar(lista);
+	mostrar(lista);
+
 
 	cout << "Introduce los datos del nuevo sudoku (nombre del fichero y numero de puntos que permite conseguir : ";
 	cin >> nombre >> puntos;
 	cout << endl;
 	
-	cout << lista.cont; 
-
 
 	if (lista.cont < MAX_SUDOKUS) {
 
@@ -177,12 +177,7 @@ bool registrarSudoku(tListaSudokus & lista) {
 
 				lista.cont++;
 			}
-
-
-			
-
-
-
+					   
 
 		}
 		guardar(lista);
@@ -207,7 +202,7 @@ bool buscarFichero(tListaSudokus & lista, string nombreFich) {
 	bool existe = false;
 	int i = 0;
 
-	while (i < lista.cont && existe) {
+	while (i < lista.cont && !existe) {
 
 		if (lista.sudoku[i].nombreArchivo == nombreFich) {
 			existe = true;
