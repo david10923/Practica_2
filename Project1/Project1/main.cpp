@@ -63,13 +63,14 @@ int main() {
 			break;
 		case 2:
 
+
 			break;
 		case 3:
 
+
 			break;
 		case 4:
-
-		
+				
 
 			if (registrarSudoku(lista) == true) {
 				cout << "Se ha podido registrar con exito el sudoku " << endl; 
