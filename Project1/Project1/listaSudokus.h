@@ -36,6 +36,6 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku);
 void moverLista(tListaSudokus & lista, int posMover);
 
 
-bool operator >(tSudoku izda, tSudoku dcha);
+bool operator <(tSudoku izda, tSudoku dcha);
 
 #endif

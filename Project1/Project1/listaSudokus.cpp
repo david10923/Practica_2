@@ -65,17 +65,16 @@ void mostrar(const tListaSudokus & lista) {
 }
 
 bool cargarSudoku(const tListaSudokus & lista, tSudoku & sudoku) {
-	bool ok = false;
-	string nombre;
+	bool ok = false;	
 	int i = 0;
 
-	cout << "Introduce el nombre del sudoku al que quieres jugar : ";
-	cin >> nombre;
+	cout << "Introduce el nombre del sudoku al que quieres jugar  y los puntos del sudoku : ";
+	cin >> sudoku.nombreArchivo >> sudoku.puntos;
 	cout << endl;
 
 	while ((i < lista.cont) && (!ok)) {
 
-		if (lista.sudoku[i].nombreArchivo == nombre) { // poner nombre donde pone sudoku1.txt
+		if (lista.sudoku[i].nombreArchivo == sudoku.nombreArchivo && lista.sudoku[i].puntos == sudoku.puntos) { // poner nombre donde pone sudoku1.txt
 			ok = true;
 			sudoku.nombreArchivo = lista.sudoku[i].nombreArchivo;
 			sudoku.puntos = lista.sudoku[i].puntos;
@@ -102,7 +101,7 @@ bool guardar(const tListaSudokus & lista) {
 		ok = true; 
 
 
-		while (i < MAX_SUDOKUS && ok) {
+		while (i < lista.cont && ok) {
 			archivo << lista.sudoku[i].nombreArchivo; 
 			archivo << " ";
 			archivo << lista.sudoku[i].puntos; 
@@ -133,7 +132,7 @@ void moverLista(tListaSudokus & lista, int posMover) {
 
 bool registrarSudoku(tListaSudokus & lista) {
 
-	string nombre;
+ 	string nombre;
 	int puntos, posInsertar;
 	bool ok = false;
 	tSudoku sudoku;
@@ -142,7 +141,7 @@ bool registrarSudoku(tListaSudokus & lista) {
 	mostrar(lista);
 
 
-	cout << "Introduce los datos del nuevo sudoku (nombre del fichero y numero de puntos que permite conseguir : ";
+	cout << "Introduce los datos del nuevo sudoku (nombre del fichero y numero de puntos que permite conseguir ): ";
 	cin >> nombre >> puntos;
 	cout << endl;
 	
@@ -150,14 +149,15 @@ bool registrarSudoku(tListaSudokus & lista) {
 	if (lista.cont < MAX_SUDOKUS) {
 
 		if (!buscarFichero(lista, nombre)) {
-			ok = true;
+			
 
 			sudoku.nombreArchivo = nombre;
 			sudoku.puntos = puntos;
 
 			posInsertar = buscarPos(lista, sudoku);
 
-			if (posInsertar != -1) {			
+			if (posInsertar != -1) {
+				ok = true;
 
 
 				moverLista(lista, posInsertar);
@@ -215,12 +215,11 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 	while (ini <= final && !encontrado) {
 		mitad = (ini + final) / 2;
 
-		if (lista.sudoku[mitad].puntos == sudoku.puntos && lista.sudoku[mitad].nombreArchivo == sudoku.nombreArchivo){
-
+		if (lista.sudoku[mitad].puntos == sudoku.puntos){
 			encontrado = true;
 
 		}
-		else if (sudoku.puntos < lista.sudoku[mitad].puntos && lista.sudoku[mitad].nombreArchivo == sudoku.nombreArchivo){
+		else if (sudoku.puntos < lista.sudoku[mitad].puntos){
 			final = mitad - 1;
 
 		}
@@ -236,8 +235,14 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 
 }
 
-bool  operator>(tSudoku izda, tSudoku dcha) {
-	return izda.nombreArchivo > dcha.nombreArchivo && izda.puntos > dcha.puntos;
+bool  operator<(tSudoku izda, tSudoku dcha) {
+	if (izda.puntos == dcha.puntos) {
+		return izda.nombreArchivo < dcha.nombreArchivo;
+	}
+	else {
+		return izda.puntos < dcha.puntos;
+	}
+	
 }
 
 
