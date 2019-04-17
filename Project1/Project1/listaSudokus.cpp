@@ -117,14 +117,41 @@ bool guardar(const tListaSudokus & lista) {
 }
 
 
-void moverLista(tListaSudokus & lista, int posMover) {
+bool moverLista(tListaSudokus & lista, tSudoku sudoku) {
+	bool ok = false; 
 
-	for (int i = lista.cont + 1; i < posMover; i--) { // empiezas en el contador +1 y mueves las posiciones desde el final para insertar 
-		lista.sudoku[i] = lista.sudoku[i - 1];
+	if (lista.cont <MAX_SUDOKUS ){
+		ok = true; 
+
+		int pos = buscarPos(lista, sudoku); // ya t dice la posicion en la que la tienes que insertar no hace falta buscar la posicion 
+
+		if (pos != -1) {
+
+			//insertamos en la posicion i(primer mayor o igual)
+
+			for (int j = lista.cont; j > pos; j--) {
+
+				lista.sudoku[j] = lista.sudoku[j - 1];
+
+			}
+			lista.sudoku[pos] = sudoku;
+			lista.cont++;
+
+
+
+
+		}
+		else {
+			cout << "No se ha podiod introducir el sudoku en el sitio indicado " << endl; 
+
+		}
 		
 	}
+	else {
+		cout << "La lista ha alcanzado el numero maximo de sudokus permitidos " << endl; 
+	}
 
-
+	return ok; 
 
 }
 
@@ -146,42 +173,20 @@ bool registrarSudoku(tListaSudokus & lista) {
 	cout << endl;
 	
 
-	if (lista.cont < MAX_SUDOKUS) {
-
-		if (!buscarFichero(lista, nombre)) {
-			
+		if (!buscarFichero(lista, nombre)) {			
 
 			sudoku.nombreArchivo = nombre;
 			sudoku.puntos = puntos;
 
-			posInsertar = buscarPos(lista, sudoku);
-
-			if (posInsertar != -1) {
-				ok = true;
+			if (moverLista(lista, sudoku)) {
+				ok = true; 
 
 
-				moverLista(lista, posInsertar);
-
-				lista.sudoku[posInsertar].nombreArchivo = nombre;
-				lista.sudoku[posInsertar].puntos = puntos;
-			
-
-				lista.cont++;
-			}
-					   
+			}				   
 
 		}
 		guardar(lista);
-		mostrar(lista);
-
-
-	}
-	
-	else {
-
-		cout << "Error, la lista ya ha alcanzado el maximo de sudokus permitidos " << endl;
-
-	}
+		mostrar(lista);	
 		
 
 	return ok;

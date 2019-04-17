@@ -33,7 +33,7 @@ bool guardar(const tListaSudokus & lista);
 bool registrarSudoku(tListaSudokus & lista);
 bool buscarFichero(tListaSudokus & lista, std::string nombreFich);
 int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku);
-void moverLista(tListaSudokus & lista, int posMover);
+bool moverLista(tListaSudokus & lista, tSudoku sudoku);
 
 
 bool operator <(tSudoku izda, tSudoku dcha);
