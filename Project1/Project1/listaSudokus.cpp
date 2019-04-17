@@ -11,13 +11,6 @@ using namespace std;
 
 void crearListaVacia(tListaSudokus & lista) {
 
-	for (int i = 0; i < MAX_SUDOKUS; i++) {
-
-		lista.sudoku[i].puntos = 0;
-		lista.sudoku[i].nombreArchivo = " "; //inicializa el nombre del archivo de cada sudoku de la lista a vacio 		 
-	}
-
-
 	lista.cont = 0;
 }
 
@@ -63,9 +56,7 @@ void mostrar(const tListaSudokus & lista) {
 
 	//while (lista.sudoku[i].nombreArchivo  != " " && i < lista.cont) {
 	while (i < lista.cont) {
-		cout << lista.sudoku[i].nombreArchivo << " " << lista.sudoku[i].puntos << endl;
-
-		cout << lista.cont;
+		cout << lista.sudoku[i].nombreArchivo << " " << lista.sudoku[i].puntos << endl;		
 		i++;
 	}
 
