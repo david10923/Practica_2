@@ -72,7 +72,7 @@ int main() {
 		
 
 			if (registrarSudoku(lista) == true) {
-				cout << "Se ha podido registrar con exito el sudoku " << endl; 
+				cout << endl; 
 
 			}
 

@@ -100,7 +100,6 @@ bool guardar(const tListaSudokus & lista) {
 	if (archivo.is_open()) {
 		ok = true; 
 
-
 		while (i < lista.cont && ok) {
 			archivo << lista.sudoku[i].nombreArchivo; 
 			archivo << " ";
@@ -142,7 +141,7 @@ bool moverLista(tListaSudokus & lista, tSudoku sudoku) {
 
 		}
 		else {
-			cout << "No se ha podiod introducir el sudoku en el sitio indicado " << endl; 
+			cout << "No se ha podido introducir el sudoku en el sitio indicado " << endl; 
 
 		}
 		
@@ -159,7 +158,8 @@ bool moverLista(tListaSudokus & lista, tSudoku sudoku) {
 
 bool registrarSudoku(tListaSudokus & lista) {
 
- 	string nombre;
+
+	string nombre;
 	int puntos, posInsertar;
 	bool ok = false;
 	tSudoku sudoku;
@@ -173,21 +173,31 @@ bool registrarSudoku(tListaSudokus & lista) {
 	cout << endl;
 	
 
-		if (!buscarFichero(lista, nombre)) {			
+	if (buscarFichero(lista, nombre)) {
+		cout << "Existe un sudoku con el mismo nombre ";
+	}
 
-			sudoku.nombreArchivo = nombre;
-			sudoku.puntos = puntos;
+		sudoku.nombreArchivo = nombre;
+		sudoku.puntos = puntos;
 
-			if (moverLista(lista, sudoku)) {
-				ok = true; 
-
-
-			}				   
-
-		}
+	if (sudoku.puntos > lista.sudoku[lista.cont-1].puntos) {
+		cout << "El sudoku que vas a introducir tiene mas puntos a obtener que los demas que se encuentran en la lista" << endl;
+		cout << endl; 
+		lista.sudoku[lista.cont].puntos = sudoku.puntos; 
+		lista.sudoku[lista.cont].nombreArchivo = sudoku.nombreArchivo;
+		lista.cont++;
 		guardar(lista);
-		mostrar(lista);	
+
+	}
+
+	else if (moverLista(lista, sudoku)) {
+			ok = true; 
+			guardar(lista);
+
+	}				   
 		
+	mostrar(lista);	
+	
 
 	return ok;
 
@@ -200,7 +210,7 @@ bool buscarFichero(tListaSudokus & lista, string nombreFich) {
 
 	while (i < lista.cont && !existe) {
 
-		if (lista.sudoku[i].nombreArchivo == nombreFich) {
+		if (lista.sudoku[i].nombreArchivo == nombreFich ) {
 			existe = true;
 
 		}
@@ -214,7 +224,7 @@ bool buscarFichero(tListaSudokus & lista, string nombreFich) {
 
 int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 
-	int posicion = -1, final = lista.cont - 1, ini = 0, mitad;
+	int posicion = -1, final = lista.cont-1 , ini = 0, mitad;
 	bool encontrado = false;
 
 	while (ini <= final && !encontrado) {
@@ -241,6 +251,7 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 }
 
 bool  operator<(tSudoku izda, tSudoku dcha) {
+
 	if (izda.puntos == dcha.puntos) {
 		return izda.nombreArchivo < dcha.nombreArchivo;
 	}
