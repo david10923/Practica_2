@@ -29,14 +29,18 @@
     <ClCompile Include="casilla.cpp" />
     <ClCompile Include="conjunto.cpp" />
     <ClCompile Include="juego.cpp" />
+    <ClCompile Include="jugador.cpp" />
     <ClCompile Include="listaSudokus.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="listaJugadores.cpp" />
     <ClCompile Include="tablero.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="casilla.h" />
     <ClInclude Include="conjunto.h" />
     <ClInclude Include="juego.h" />
+    <ClInclude Include="jugador.h" />
+    <ClInclude Include="listaJugadores.h" />
     <ClInclude Include="listaSudokus.h" />
     <ClInclude Include="tablero.h" />
   </ItemGroup>
