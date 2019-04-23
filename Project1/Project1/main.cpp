@@ -2,6 +2,7 @@
 #include<string>
 #include"juego.h"
 #include "listaSudokus.h"
+#include"listaJugadores.h"
 
 
 using namespace std;
@@ -37,7 +38,7 @@ int main() {
 	tJuego juego;
 	tSudoku sudoku;
 	tListaSudokus lista;
-
+	tListaJugadores listaJ;
 
 	int opcion = 1;
 	int puntos = 0;
@@ -67,6 +68,9 @@ int main() {
 			break;
 		case 3:
 
+			guardar(listaJ);
+			ordenarPorRanking(listaJ);
+			mostrar(listaJ);
 
 			break;
 		case 4:

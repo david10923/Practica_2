@@ -1,0 +1,5 @@
+juan 2
+pedro 7
+david 1 
+maria 4
+alfonso 3

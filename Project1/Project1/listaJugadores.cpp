@@ -74,6 +74,34 @@ bool guardar(const tListaJugadores & lista) {
 
 }
 
+
+bool buscar(const tListaJugadores & lista, string id, int & pos) {
+
+	int mitad, posicion = -1, final = lista.cont - 1, ini = 0;
+	bool encontrado = false;
+
+	while (ini <= final && !encontrado) {
+		mitad = final / 2;
+
+		if (lista.jugador[mitad].id == id) {
+			encontrado = true;
+
+		}
+		else if (id < lista.jugador[mitad].id) {
+			final = mitad - 1;
+		}
+		else {
+			ini = mitad + 1;
+		}
+		if (encontrado) {
+			pos = mitad;
+		}
+
+	}
+
+	return encontrado;
+}
+
 void puntuarJugador(tListaJugadores & lista, int puntos) {
 	int pos;
 
@@ -101,54 +129,47 @@ void puntuarJugador(tListaJugadores & lista, int puntos) {
 
 }
 
-bool buscar(const tListaJugadores & lista, string id, int & pos) {
 
-	int mitad,posicion =-1, final = lista.cont - 1, ini = 0;
-	bool encontrado = false;
-
-	while (ini <= final && !encontrado) {
-		mitad = final / 2;
-
-		if (lista.jugador[mitad].id == id) {
-			encontrado = true;
-
-		}
-		else if (id <lista.jugador[mitad].id ) {
-			final = mitad - 1;
-		}
-		else {
-			ini = mitad + 1;
-		}
-		if (encontrado) {
-			pos = mitad;
-		}
-
-	}
-
-	return encontrado;
-}
 
 tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 
 	bool inter = true; 
 	int i = 0; 
+	tJugador jugador; // jugador auxiliar 
+	tListaJugadores listaCopia;  // lista auxiliar para devolver 
+
+	listaCopia = lista; // copias la lista original en una lista auxiliar para devolver 
+	// tienes tu lista original la cual no modificas y tienes la lista auxiliar la cual modificas y la ordenas por el metodo de la burbuja 
+
+
 
 	while (i < MAX_JUGADORES -1 && inter) {
 
 		inter = false;
 
 		for (int j = MAX_JUGADORES - 1; j > 1; j--) {
-			if (lista.jugador[j] < lista.jugador[j - 1]) {
-				int tmp; 
-				tmp = lista.jugador[j]; 
+
+			if (listaCopia.jugador[j] < listaCopia.jugador[j - 1]) {		
+
+				jugador = listaCopia.jugador[j]; // copias el jugador de la lista en un jugador auxiliar 
+
+				listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
+				listaCopia.jugador[j - 1] = jugador; 
+				inter = true; 
+
+
+
 
 			}
 		}
 
+		if (inter) {
+			i++;
 
-
-		
+		}	
 
 
 	}
+
+	return listaCopia;
 }

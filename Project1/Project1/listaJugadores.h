@@ -20,7 +20,7 @@
 	void mostrar(const tListaJugadores & lista);
 	bool guardar(const tListaJugadores & lista);
 	void puntuarJugador(tListaJugadores & lista, int puntos);
-	bool buscar(const tListaJugadores & lista, string id, int & pos);
+	bool buscar(const tListaJugadores & lista, std::string id, int & pos);
 	tListaJugadores ordenarPorRanking(const tListaJugadores & lista);
 
 
