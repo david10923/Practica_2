@@ -16,15 +16,17 @@ void modificarJugador(tJugador & jugador, int puntos) {
 
 }
 
-bool operator<(const tJugador & opIzq, const tJugador & opDer) { // No se muy bien que hay que hacer en esta funcion 
-	bool ok = false;
+bool operator<(const tJugador & opIzq, const tJugador & opDer) { 
 
-	if (opIzq.id < opDer.id) { 
-		ok = true;
-		
+
+	if (opIzq.id == opDer.id) { 
+		return opIzq.puntos < opDer.puntos;				
+	}
+	else {
+		return opIzq.id < opDer.id;
 	}
 	
-	return ok;
+	
 }
 
 bool menor(const tJugador & j1, const tJugador & j2) {

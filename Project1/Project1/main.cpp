@@ -38,7 +38,10 @@ int main() {
 	tJuego juego;
 	tSudoku sudoku;
 	tListaSudokus lista;
-	tListaJugadores listaJ;
+	tListaJugadores listaJ, listaCopia;
+
+	listaJ.cont = 0; 
+	lista.cont = 0;
 
 	int opcion = 1;
 	int puntos = 0;
@@ -60,18 +63,28 @@ int main() {
 			cout << "La puntuacion ha sido de : " << puntos << endl;		
 
 			
-
 			break;
 		case 2:
+			
+			cout << endl; 
 
+			cargar(listaJ);
+			listaCopia = ordenarPorRanking(listaJ);
+			guardar(listaJ);
+			mostrar(listaCopia);
 
+			cout << endl; 
+					
 			break;
 		case 3:
 
-			guardar(listaJ);
-			ordenarPorRanking(listaJ);
-			mostrar(listaJ);
+			cout << endl;
 
+			
+
+
+			cout << endl;
+			
 			break;
 		case 4:
 				
@@ -90,6 +103,7 @@ int main() {
 			cout << "Has elegido la opcion de salir del juego " << endl;
 		}
 
+		cout << "--------------------------------------------" << endl; 
 
 
 	}

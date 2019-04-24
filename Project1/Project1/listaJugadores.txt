@@ -1,5 +1,7 @@
-juan 2
-pedro 7
-david 1 
-maria 4
-alfonso 3
+david 2
+juan 1
+carlos 4
+pepe 5
+andres 20
+ana 3
+maria 8

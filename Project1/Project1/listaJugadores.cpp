@@ -102,7 +102,7 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 	return encontrado;
 }
 
-void puntuarJugador(tListaJugadores & lista, int puntos) {
+void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invocar despues de ganar un sudoku ? 
 	int pos;
 
 	string nombre;
@@ -147,7 +147,7 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 
 		inter = false;
 
-		for (int j = MAX_JUGADORES - 1; j > 1; j--) {
+		for (int j = lista.cont - 1; j > 0; j--) {
 
 			if (listaCopia.jugador[j] < listaCopia.jugador[j - 1]) {		
 
@@ -156,9 +156,6 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 				listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
 				listaCopia.jugador[j - 1] = jugador; 
 				inter = true; 
-
-
-
 
 			}
 		}
