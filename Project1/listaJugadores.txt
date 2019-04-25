@@ -1,0 +1,7 @@
+ana 3
+andres 4 
+carlos 5 
+david 9 
+elisa 9 
+maria 3
+pedro 6

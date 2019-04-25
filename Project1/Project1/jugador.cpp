@@ -29,7 +29,7 @@ bool operator<(const tJugador & opIzq, const tJugador & opDer) {
 	
 }
 
-bool menor(const tJugador & j1, const tJugador & j2) {
+bool menor(const tJugador & j1, const tJugador & j2) { // para que sirve esta funcion ?? 
 	bool ok = false; 
 
 	if (j1.puntos < j2.puntos || ( j1.puntos == j2.puntos && j2.id < j1.id)) ok = true;		

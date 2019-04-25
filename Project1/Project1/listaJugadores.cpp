@@ -149,15 +149,18 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 
 		for (int j = lista.cont - 1; j > 0; j--) {
 
-			if (listaCopia.jugador[j] < listaCopia.jugador[j - 1]) {		
-
+		
+		//	if (menor(lista.jugador[j],lista.jugador[j-1])) {	
+			
+				if (listaCopia.jugador[j].puntos < listaCopia.jugador[j - 1].puntos) {
+					
 				jugador = listaCopia.jugador[j]; // copias el jugador de la lista en un jugador auxiliar 
 
 				listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
 				listaCopia.jugador[j - 1] = jugador; 
 				inter = true; 
 
-			}
+				}
 		}
 
 		if (inter) {

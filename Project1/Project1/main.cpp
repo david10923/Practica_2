@@ -68,10 +68,9 @@ int main() {
 			
 			cout << endl; 
 
+			// al estar ordenada por identificador la lista no hace falta ordenarla  
 			cargar(listaJ);
-			listaCopia = ordenarPorRanking(listaJ);
-			guardar(listaJ);
-			mostrar(listaCopia);
+			mostrar(listaJ);			
 
 			cout << endl; 
 					
@@ -79,8 +78,11 @@ int main() {
 		case 3:
 
 			cout << endl;
-
-			
+			// si que hay que ordenar la copia de la lista , pero en funcion de los puntos , ya que la lista original esta ordenada por identificador
+			cargar(listaJ);
+			listaCopia = ordenarPorRanking(listaJ);
+			guardar(listaJ);
+			mostrar(listaCopia);			
 
 
 			cout << endl;

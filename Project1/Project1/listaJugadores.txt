@@ -1,7 +1,7 @@
-david 2
-juan 1
-carlos 4
-pepe 5
-andres 20
 ana 3
-maria 8
+andres 4
+carlos 5
+david 9
+elisa 7
+maria 3
+pedro 2
