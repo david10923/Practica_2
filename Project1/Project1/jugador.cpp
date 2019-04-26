@@ -7,7 +7,11 @@
 using namespace std; 
 
 string toString(tJugador jugador) {
-	return "jugador.id +  jugador.puntos";
+	string jugador1;
+
+	//return "jugador.id +  jugador.puntos";
+
+	return jugador1 = jugador.id + " " + (char) jugador.puntos;
 }
 
 void modificarJugador(tJugador & jugador, int puntos) {

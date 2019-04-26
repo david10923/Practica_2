@@ -3,6 +3,7 @@
 #include<iostream>
 #include<string>
 #include<fstream>
+#include<ctype.h>
 
 using namespace std;
 
@@ -21,9 +22,8 @@ bool cargar(tListaJugadores & lista) {
 		ok = true;
 
 		while (i < MAX_JUGADORES && !archivo.eof()) {
-
-			archivo >>lista.jugador[i].id;
-
+			
+			archivo >>lista.jugador[i].id;	 
 			archivo >>lista.jugador[i].puntos;
 
 			lista.cont++;
@@ -59,11 +59,13 @@ bool guardar(const tListaJugadores & lista) {
 		ok = true;
 
 		while (i < lista.cont && ok) {
-			archivo << lista.jugador[i].id;
+			/* archivo << lista.jugador[i].id;
 			archivo << " ";
 			archivo << lista.jugador[i].puntos;
 			archivo << endl;
-			
+			*/
+			archivo << toString(lista.jugador[i]);
+
 			i++;
 
 		}
@@ -154,11 +156,11 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 			
 				if (listaCopia.jugador[j].puntos < listaCopia.jugador[j - 1].puntos) {
 					
-				jugador = listaCopia.jugador[j]; // copias el jugador de la lista en un jugador auxiliar 
+					jugador = listaCopia.jugador[j]; // copias el jugador de la lista en un jugador auxiliar 
 
-				listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
-				listaCopia.jugador[j - 1] = jugador; 
-				inter = true; 
+					listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
+					listaCopia.jugador[j - 1] = jugador; 
+					inter = true; 
 
 				}
 		}
