@@ -30,7 +30,13 @@ void actualizaRegionBorraNum(tTablero & tablero, int row, int col, int numero) {
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
 
-			annadeElemento(tablero[i][j].conjunto, numero);
+			if (!cuidadoBorraNumFila(tablero, fila, j, numero)) {
+				if (!cuidadoBorraNumCol(tablero, i, j, numero)) {
+					annadeElemento(tablero[fila][j].conjunto, numero);
+				}
+			}
+
+			
 		}
 	}
 
@@ -58,12 +64,14 @@ void actualizaFilaCol(tTablero & tablero, int fila, int col, int numero) {
 
 void actualizaFilaColBorraNum(tTablero & tablero, int fila, int col, int numero) {
 
-	int i = 0; int j = 0;
+	int i = 0; int j = 0;	
 
 	while (j < DIM) { // actualizas la fila 
 
-		if(!cuidadoBorraNumFila(tablero, j, col)){
-			annadeElemento(tablero[fila][j].conjunto, numero);
+		if(!cuidadoBorraNumFila(tablero, fila, col,numero)){
+			if(!cuidadoBorraNumCol(tablero, fila, j, numero)) {
+				annadeElemento(tablero[fila][j].conjunto, numero);
+			}
 		}
 
 		j++;
@@ -71,14 +79,17 @@ void actualizaFilaColBorraNum(tTablero & tablero, int fila, int col, int numero)
 
 	while (i < DIM) { // actualizas la columna 
 
-		if (!cuidadoBorraNumCol(tablero, fila, i)) {
-			annadeElemento(tablero[i][col].conjunto, numero);
+		if (!cuidadoBorraNumCol(tablero, fila, col,numero)) {
+			if(!cuidadoBorraNumFila(tablero,i, col,numero)){
+				annadeElemento(tablero[i][col].conjunto, numero);
+			}
 
 		}
 		
 		i++;
 	}
 
+	
 }
 
 
@@ -161,7 +172,7 @@ void dibujarTablero(const tTablero & tablero) {
 		}
 		cout << "|" << endl;
 	}
-	cout << "----------------------------------------------" << endl;
+	cout << "-------------------------------" << endl;
 
 }
 
@@ -203,15 +214,14 @@ bool borrarNum(tTablero & tablero, int fila, int col) {
 		posible = true;
 
 
-		actualizaFilaColBorraNum(tablero, fila, col, c);
-		actualizaRegionBorraNum(tablero, fila, col, c);
-		annadeElemento(tablero[fila][col].conjunto, c);
-		
-
-
 		tablero[fila][col].estado = vacia;
 		tablero[fila][col].numero = ' ';
 
+
+		actualizaFilaColBorraNum(tablero, fila, col, c);
+		actualizaRegionBorraNum(tablero, fila, col, c);
+		annadeElemento(tablero[fila][col].conjunto, c);	
+		
 
 
 	}
@@ -276,33 +286,36 @@ void rellenarSimples(tTablero& tablero) {
 
 }
 
-bool cuidadoBorraNumFila(tTablero & tablero, int fila, int col) {
+bool cuidadoBorraNumFila(tTablero & tablero, int fila, int col,int numero) {
 
 	bool posibleFallo = false; 
+	int i = 0;
 
-	for (int i = 0; i < DIM;i++) {
+	while (!posibleFallo && i < DIM){
 
-		if (tablero[fila][i].conjunto.intervalo == false) {
+		if (tablero[fila][i].numero == numero) {
 			posibleFallo = true;			
 
 		}
-
+		i++;
 	}
 	return posibleFallo;
 
 	
 }
 
-bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col) {
+bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col,int numero) {
 
 	bool posibleFallo = false;
+	int i=0;
 
-	for (int i = 0; i < DIM; i++) {
+	while(!posibleFallo && i < DIM){
 
-		if (tablero[i][col].conjunto.intervalo == false) {
+		if (tablero[i][col].numero == numero) {
 			posibleFallo = true;
 
 		}
+		i++;
 
 	}
 	return posibleFallo;
@@ -310,7 +323,7 @@ bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col) {
 
 }
 
-bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col) {
+bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 
 
 	return 0;

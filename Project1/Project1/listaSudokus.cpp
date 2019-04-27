@@ -69,12 +69,16 @@ bool cargarSudoku(const tListaSudokus & lista, tSudoku & sudoku) {
 	int i = 0;
 
 	cout << "Introduce el nombre del sudoku al que quieres jugar  y los puntos del sudoku : ";
-	cin >> sudoku.nombreArchivo >> sudoku.puntos;
+	//cin >> sudoku.nombreArchivo >> sudoku.puntos;
+	sudoku.nombreArchivo = "sudoku1.txt";
+	sudoku.puntos = 1;
 	cout << endl;
+
 
 	while ((i < lista.cont) && (!ok)) {
 
 		if (lista.sudoku[i].nombreArchivo == sudoku.nombreArchivo && lista.sudoku[i].puntos == sudoku.puntos) { // poner nombre donde pone sudoku1.txt
+
 			ok = true;
 			sudoku.nombreArchivo = lista.sudoku[i].nombreArchivo;
 			sudoku.puntos = lista.sudoku[i].puntos;

@@ -85,6 +85,7 @@ int jugarUnSudoku(tJuego & juego) {
 				cout << "Se ha podido cargar el juego correctamente " << endl;
 				cout << endl;
 				dibujarTablero(juego.tablero);
+				cout << endl;
 
 			}
 
@@ -125,16 +126,23 @@ int jugarUnSudoku(tJuego & juego) {
 			cout << "Fila:"; cin >> fila;
 			cout << "Columna :"; cin >> col;
 
+			if ((fila > 0 && fila < 9) && (col > 0 && col < 9)) {
 
 
-			if (juego.tablero[fila - 1][col - 1].estado != fija) {
+				if (juego.tablero[fila - 1][col - 1].estado != fija) {
 
-				cout << "Los posibles valores son:";
-				cout << endl;
-				mostrarPosibles(juego.tablero, fila - 1, col - 1);
+					cout << "Los posibles valores son:";
+					cout << endl;
+					mostrarPosibles(juego.tablero, fila - 1, col - 1);
+				}
+				else
+					cout << "Esta casilla, tiene un valor fijo :" << juego.tablero[fila - 1][col - 1].numero << endl;
+
 			}
-			else
-				cout << "Esta casilla, tiene un valor fijo :" << juego.tablero[fila - 1][col - 1].numero << endl;
+			else {
+				cout << "Los valores introducidos no se encuentran dentro de los limites del tablero" << endl;
+
+			}
 
 			cout << endl;
 
@@ -143,32 +151,48 @@ int jugarUnSudoku(tJuego & juego) {
 		case 2:  // colocar valor en una casilla
 			int numero;
 
-			cout << "Indica una casilla :" << endl;
+			cout << "Indica una casilla:" << endl;
 			cout << "Fila:"; cin >> fila;
 			cout << "Columna :"; cin >> col;
 
 
+			if ((fila > 0 && fila < 9) && (col > 0 && col < 9)){
 
-			if (juego.tablero[fila - 1][col - 1].estado == vacia) {
 
-				cout << "Numero que quieres colocar en la casilla vacia :";
-				cin >> numero;
-				cout << endl;
+				if (juego.tablero[fila - 1][col - 1].estado == vacia) {
 
-				if (ponerNum(juego.tablero, fila - 1, col - 1, numero)) { // porque es de tipo bool
-					cout << "Se ha podido introducir con exito el numero " << endl;
-					cout << endl;
+					cout << "Numero que quieres colocar en la casilla vacia (1-9) :";
+						cin >> numero;
+						cout << endl;
+
+						if (numero > 0 && numero < 10) {
+
+							if (ponerNum(juego.tablero, fila - 1, col - 1, numero)) { // porque es de tipo bool
+								cout << "Se ha podido introducir con exito el numero " << endl;
+								cout << endl;
+							}
+
+
+						}
+						else {
+							cout << "El numero es incorrecto , no pertence al rango descrito anteriormente" << endl;
+						}
+
+
+				}
+				else {
+					cout << "No se puede colocar un valor en esa casilla" << endl;
+
 				}
 
+				dibujarTablero(juego.tablero);
+				cout << endl;
 
 			}
 			else {
-				cout << "No se puede colocar un valor en esa casilla" << endl;
-
+				cout << "Los valores introducidos no se encuentran dentro de los limites del tablero" << endl; 
+				cout << endl;
 			}
-
-			dibujarTablero(juego.tablero);
-
 
 			break;
 
@@ -191,13 +215,14 @@ int jugarUnSudoku(tJuego & juego) {
 			}
 
 			dibujarTablero(juego.tablero);
-
+			cout << endl;
 			break;
 
 		case 4: //reiniciar tablero
 
 			cargaJuego(juego, juego.sudoku);
 			dibujarTablero(juego.tablero);
+			cout << endl;
 
 
 			break;
@@ -206,6 +231,7 @@ int jugarUnSudoku(tJuego & juego) {
 
 			rellenarSimples(juego.tablero);
 			dibujarTablero(juego.tablero);
+			cout << endl;
 
 
 
