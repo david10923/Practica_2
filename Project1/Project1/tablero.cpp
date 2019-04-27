@@ -15,7 +15,13 @@ void actualizaRegion(tTablero & tablero, int row, int col, int numero) {
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
 
-			borraElemento(tablero[i][j].conjunto, numero);
+			//if (tablero[i][j].numero != numero);
+
+				borraElemento(tablero[i][j].conjunto, numero);
+
+			
+
+		
 		}
 	}
 
@@ -29,11 +35,10 @@ void actualizaRegionBorraNum(tTablero & tablero, int row, int col, int numero) {
 
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
-
-			if (!cuidadoBorraNumFila(tablero, fila, j, numero)) {
-				if (!cuidadoBorraNumCol(tablero, i, j, numero)) {
+			
+			if(!cuidadoBorraNumRegion(tablero,fila,col,numero)){
 					annadeElemento(tablero[fila][j].conjunto, numero);
-				}
+				
 			}
 
 			
@@ -230,17 +235,21 @@ bool borrarNum(tTablero & tablero, int fila, int col) {
 
 
 bool tableroLLeno(const tTablero & tablero) {
-	bool lleno = false;
+	bool lleno = true;
+	int fila = 0; 
+	int columna = 0; 
 
-	for (int i = 0; i < DIM; i++) {
-		for (int j = 0; j < DIM; j++) { // cjto lleno ??
-			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija) {
-				lleno = true;
+	while (fila < DIM && lleno){
+		while(columna <DIM && lleno){
+
+			if (tablero[fila][columna].estado == vacia) {				
+				lleno = false;
 
 			}
-
-
+			
+			columna++;
 		}
+		fila++;
 	}
 
 	return lleno;
@@ -275,7 +284,6 @@ void rellenarSimples(tTablero& tablero) {
 
 				actualizaRegion(tablero, i, j, numero); // actualiza los posibles valores de la region 
 				actualizaFilaCol(tablero, i, j, numero);// actualiza las filas y columnas 
-
 
 			}
 		}
@@ -325,6 +333,28 @@ bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col,int numero) {
 
 bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 
+	bool posibleFallo = false;
+	int i = 0;
+	int j = 0 ;
 
-	return 0;
+	while (!posibleFallo && i < col +3) { // fallo de fila 
+
+		if (tablero[fila][i].numero == numero) {
+			posibleFallo = true;
+
+		}
+		i++;
+
+	}
+	while (!posibleFallo && j < fila + 3) { // fallo de columna 
+
+		if (tablero[j][col].numero == numero) {
+			posibleFallo = true;
+
+		}
+		j++;
+
+	}
+
+	return posibleFallo;
 }

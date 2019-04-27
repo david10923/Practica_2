@@ -15,7 +15,13 @@ void actualizaRegion(tTablero & tablero, int row, int col, int numero) {
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
 
-			borraElemento(tablero[i][j].conjunto, numero);
+			//if (tablero[i][j].numero != numero);
+
+				borraElemento(tablero[i][j].conjunto, numero);
+
+			
+
+		
 		}
 	}
 
@@ -29,8 +35,13 @@ void actualizaRegionBorraNum(tTablero & tablero, int row, int col, int numero) {
 
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
+			
+			if(!cuidadoBorraNumRegion(tablero,fila,col,numero)){
+					annadeElemento(tablero[fila][j].conjunto, numero);
+				
+			}
 
-			annadeElemento(tablero[i][j].conjunto, numero);
+			
 		}
 	}
 
@@ -58,20 +69,32 @@ void actualizaFilaCol(tTablero & tablero, int fila, int col, int numero) {
 
 void actualizaFilaColBorraNum(tTablero & tablero, int fila, int col, int numero) {
 
-	int i = 0; int j = 0;
+	int i = 0; int j = 0;	
 
 	while (j < DIM) { // actualizas la fila 
 
-		annadeElemento(tablero[fila][j].conjunto, numero);
+		if(!cuidadoBorraNumFila(tablero, fila, col,numero)){
+			if(!cuidadoBorraNumCol(tablero, fila, j, numero)) {
+				annadeElemento(tablero[fila][j].conjunto, numero);
+			}
+		}
+
 		j++;
 	}
 
 	while (i < DIM) { // actualizas la columna 
 
-		annadeElemento(tablero[i][col].conjunto, numero);
+		if (!cuidadoBorraNumCol(tablero, fila, col,numero)) {
+			if(!cuidadoBorraNumFila(tablero,i, col,numero)){
+				annadeElemento(tablero[i][col].conjunto, numero);
+			}
+
+		}
+		
 		i++;
 	}
 
+	
 }
 
 
@@ -139,25 +162,22 @@ bool cargarTablero(string nombreFichero, tTablero& tablero) {
 void dibujarTablero(const tTablero & tablero) {
 
 	for (int i = 0; i < DIM; i++) {
+		if (i % 3 == 0) {
+			cout << "-------------------------------" << endl;
+		}
+
 		for (int j = 0; j < DIM; j++) {
 
-			dibujaCasilla(tablero[i][j]);
-
-
-			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija)
-				cout << " " << tablero[i][j].numero;
-			else {
-				colorFondo(15);
-				cout << "  ";
+			if (j % 3 == 0) {
+				cout << "|" ;
 			}
-
+			dibujaCasilla(tablero[i][j]);
+			 
 
 		}
-		cout << endl;
+		cout << "|" << endl;
 	}
-
-	colorFondo(0);
-	cout << endl;
+	cout << "-------------------------------" << endl;
 
 }
 
@@ -173,7 +193,6 @@ bool ponerNum(tTablero & tablero, int fila, int col, int c) {
 
 		actualizaFilaCol(tablero, fila, col, c);
 		actualizaRegion(tablero, fila, col, c);
-		cjto_lleno(tablero[fila][col].conjunto);
 		annadeElemento(tablero[fila][col].conjunto, c);
 		tablero[fila][col].estado = rellenada;
 		tablero[fila][col].numero = c;
@@ -199,11 +218,16 @@ bool borrarNum(tTablero & tablero, int fila, int col) {
 	if (tablero[fila][col].estado == rellenada) {
 		posible = true;
 
-		actualizaFilaColBorraNum(tablero, fila, col, c);
-		actualizaRegionBorraNum(tablero, fila, col, c);
-		annadeElemento(tablero[fila][col].conjunto, c);
 
 		tablero[fila][col].estado = vacia;
+		tablero[fila][col].numero = ' ';
+
+
+		actualizaFilaColBorraNum(tablero, fila, col, c);
+		actualizaRegionBorraNum(tablero, fila, col, c);
+		annadeElemento(tablero[fila][col].conjunto, c);	
+		
+
 
 	}
 	return posible;
@@ -211,17 +235,21 @@ bool borrarNum(tTablero & tablero, int fila, int col) {
 
 
 bool tableroLLeno(const tTablero & tablero) {
-	bool lleno = false;
+	bool lleno = true;
+	int fila = 0; 
+	int columna = 0; 
 
-	for (int i = 0; i < DIM; i++) {
-		for (int j = 0; j < DIM; j++) { // cjto lleno ??
-			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija) {
-				lleno = true;
+	while (fila < DIM && lleno){
+		while(columna <DIM && lleno){
+
+			if (tablero[fila][columna].estado == vacia) {				
+				lleno = false;
 
 			}
-
-
+			
+			columna++;
 		}
+		fila++;
 	}
 
 	return lleno;
@@ -231,9 +259,16 @@ bool tableroLLeno(const tTablero & tablero) {
 
 void mostrarPosibles(const tTablero & tablero, int fila, int col) {
 
-	mostrar(tablero[fila][col].conjunto);
+	if (tablero[fila][col].estado != rellenada) {
+
+		mostrar(tablero[fila][col].conjunto);
 
 
+	}
+	else {
+		cout << "La casilla que has introducido ha sido rellenada previamente por un valor" << endl; 
+	}
+	
 }
 
 
@@ -250,7 +285,6 @@ void rellenarSimples(tTablero& tablero) {
 				actualizaRegion(tablero, i, j, numero); // actualiza los posibles valores de la region 
 				actualizaFilaCol(tablero, i, j, numero);// actualiza las filas y columnas 
 
-
 			}
 		}
 	}
@@ -260,3 +294,67 @@ void rellenarSimples(tTablero& tablero) {
 
 }
 
+bool cuidadoBorraNumFila(tTablero & tablero, int fila, int col,int numero) {
+
+	bool posibleFallo = false; 
+	int i = 0;
+
+	while (!posibleFallo && i < DIM){
+
+		if (tablero[fila][i].numero == numero) {
+			posibleFallo = true;			
+
+		}
+		i++;
+	}
+	return posibleFallo;
+
+	
+}
+
+bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col,int numero) {
+
+	bool posibleFallo = false;
+	int i=0;
+
+	while(!posibleFallo && i < DIM){
+
+		if (tablero[i][col].numero == numero) {
+			posibleFallo = true;
+
+		}
+		i++;
+
+	}
+	return posibleFallo;
+
+
+}
+
+bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
+
+	bool posibleFallo = false;
+	int i = 0;
+	int j = 0 ;
+
+	while (!posibleFallo && i < col +3) { // fallo de fila 
+
+		if (tablero[fila][i].numero == numero) {
+			posibleFallo = true;
+
+		}
+		i++;
+
+	}
+	while (!posibleFallo && j < fila + 3) { // fallo de columna 
+
+		if (tablero[j][col].numero == numero) {
+			posibleFallo = true;
+
+		}
+		j++;
+
+	}
+
+	return posibleFallo;
+}

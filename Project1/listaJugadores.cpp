@@ -1,4 +1,5 @@
 #include "listaJugadores.h"
+#include "jugador.h"
 
 #include<iostream>
 #include<string>

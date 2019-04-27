@@ -23,6 +23,10 @@ void actualizaRegion(tTablero & tablero, int row, int col, int numero);
 void actualizaFilaCol(tTablero & tablero, int fila, int col, int numero);
 void actualizaRegionBorraNum(tTablero & tablero, int row, int col, int numero);
 void actualizaFilaColBorraNum(tTablero & tablero, int fila, int col, int numero);// actualiza el valor de la fila y de la columna borrando  el numero de la fila y de la columna 
+bool cuidadoBorraNumFila(tTablero & tablero , int fila, int col,int numero);
+bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col, int numero);
+bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col, int numero);
+
 
 
 

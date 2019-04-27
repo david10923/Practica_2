@@ -2,6 +2,7 @@
 #include<string>
 #include"juego.h"
 #include "listaSudokus.h"
+#include"listaJugadores.h"
 
 
 using namespace std;
@@ -36,7 +37,11 @@ int main() {
 
 	tJuego juego;
 	tSudoku sudoku;
+	tListaSudokus lista;
+	tListaJugadores listaJ, listaCopia;
 
+	listaJ.cont = 0; 
+	lista.cont = 0;
 
 	int opcion = 1;
 	int puntos = 0;
@@ -54,20 +59,48 @@ int main() {
 		case 1:
 
 			puntos = jugarUnSudoku(juego);
+			cargar(listaJ);
+			mostrar(listaJ);
+			cout << endl;
+			cout << "Estos son los jugadores que estan ya en la lista de jugadores " << endl;
+			puntos = juego.sudoku.puntos;
+			cout << endl;		
+			puntuarJugador(listaJ, puntos);			
 
-			cout << "La puntuacion ha sido de : " << puntos << endl;
 
-
-
+			
 			break;
 		case 2:
+			
+			cout << endl; 
 
+			// al estar ordenada por identificador la lista no hace falta ordenarla  
+			cargar(listaJ);
+			mostrar(listaJ);			
+
+			cout << endl; 
+					
 			break;
 		case 3:
 
+			cout << endl;
+			// si que hay que ordenar la copia de la lista , pero en funcion de los puntos , ya que la lista original esta ordenada por identificador
+			cargar(listaJ);
+			listaCopia = ordenarPorRanking(listaJ);
+			guardar(listaJ);
+			mostrar(listaCopia);			
+
+
+			cout << endl;
+			
 			break;
 		case 4:
-			registrarSudoku(lista);
+				
+
+			if (registrarSudoku(lista) == true) {
+				cout << endl; 
+
+			}
 
 			break;
 
@@ -78,6 +111,7 @@ int main() {
 			cout << "Has elegido la opcion de salir del juego " << endl;
 		}
 
+		cout << "--------------------------------------------" << endl; 
 
 
 	}

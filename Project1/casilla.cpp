@@ -22,6 +22,7 @@ void rellenaCasilla(tCasilla & casilla, char c, bool fijas) {
 
 	if (c == ' ') {
 		casilla.estado = vacia;
+		casilla.numero = ' ';
 
 	}
 	else if (c >= '1' && c <= '9') {
@@ -49,16 +50,30 @@ void rellenaCasilla(tCasilla & casilla, char c, bool fijas) {
 
 }
 
-void dibujaCasilla(const tCasilla & casilla) {
+void dibujaCasilla(const tCasilla & casilla) {	
+
 
 	if (casilla.estado == fija) {
 		colorFondo(1);
+		cout << " " << casilla.numero << " ";
+
 
 	}
 	else if (casilla.estado == rellenada) {
 		colorFondo(4);
+		cout << " " << casilla.numero << " ";
 
 	}
+	else if (casilla.estado == vacia) {
+		colorFondo(0);
+
+		cout << " " << (char)casilla.numero << " ";
+	
+	}
+	colorFondo(0);
+
+
+	
 
 }
 

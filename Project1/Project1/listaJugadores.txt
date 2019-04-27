@@ -1,7 +1,8 @@
-ana 3
-andres 4
-carlos 5
-david 9
-elisa 7
-maria 3
-pedro 2
+Agustin 1
+Ana 22
+Belen 50 
+Clara 8
+Lola 50
+Luis 4
+Pedro 40 
+Yoli 4

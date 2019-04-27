@@ -2,6 +2,9 @@
 #include"juego.h"
 #include"listaSudokus.h"
 #include<iostream>
+#include<string>
+#include"listaJugadores.h"
+
 using namespace std;
 
 
@@ -65,10 +68,13 @@ int menu2() {
 int jugarUnSudoku(tJuego & juego) {
 
 	tListaSudokus sudokuLista;
+	tListaJugadores lista;
 	int opcion2 = -1;
 	bool ok = true;
 	int puntos = 0, fila = 0, col = 0;
 	sudokuLista.cont = 0;
+	lista.cont = 0;
+
 
 
 	if (cargar(sudokuLista)) {
@@ -158,7 +164,6 @@ int jugarUnSudoku(tJuego & juego) {
 
 			if ((fila > 0 && fila < 9) && (col > 0 && col < 9)){
 
-
 				if (juego.tablero[fila - 1][col - 1].estado == vacia) {
 
 					cout << "Numero que quieres colocar en la casilla vacia (1-9) :";
@@ -186,6 +191,13 @@ int jugarUnSudoku(tJuego & juego) {
 				}
 
 				dibujarTablero(juego.tablero);
+
+				if(tableroLLeno(juego.tablero)) {					
+					ok = false;
+					cout << "Has conseguido rellenar satisfactoriamente el sudoku " << endl;
+					cout << "Has ganado " << juego.sudoku.puntos << "punto(s)";
+
+				}
 				cout << endl;
 
 			}
@@ -230,10 +242,23 @@ int jugarUnSudoku(tJuego & juego) {
 		case 5: //autocompletar celdas simples
 
 			rellenarSimples(juego.tablero);
-			dibujarTablero(juego.tablero);
-			cout << endl;
+			dibujarTablero(juego.tablero);			
+		
+			/*
+			
+			cout << juego.tablero[0][2].numero << endl;
+			cout << juego.tablero[2][4].numero << endl;
+			cout << juego.tablero[2][5].numero << endl;
+			cout << juego.tablero[4][4].numero << endl; 
+			*/
 
+			if (tableroLLeno(juego.tablero)) {
+				ok = false;				
+				cout << "Has conseguido rellenar satisfactoriamente el sudoku " << endl;
+				cout << "Has ganado " << juego.sudoku.puntos << "punto(s)";
+				cout << endl;
 
+			}
 
 			break;
 
@@ -243,17 +268,29 @@ int jugarUnSudoku(tJuego & juego) {
 
 		}
 
+		/*
+		
+		if (tableroLLeno(juego.tablero)) {
+
+			cargar(lista);
+			mostrar(lista);
+			cout << endl;
+			cout << "Estos son los jugadores que estan ya en la lista de jugadores " << endl;
+
+			puntos = juego.sudoku.puntos;
+			cout << endl;
+			puntuarJugador(lista, puntos);
+
+		}
+		else
+			puntos = 0;
+
+
+			*/
+
 	}
 
-	if (tableroLLeno(juego.tablero)) {
-
-		cout << "Has conseguido rellenar satisfactoriamente el sudoku " << endl;
-		puntos = juego.sudoku.puntos;
-	}
-	else
-		puntos = 0;
-
-
+	
 	return puntos;
 
 
