@@ -29,11 +29,10 @@ void actualizaRegionBorraNum(tTablero & tablero, int row, int col, int numero) {
 
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
-
-			if (!cuidadoBorraNumFila(tablero, fila, j, numero)) {
-				if (!cuidadoBorraNumCol(tablero, i, j, numero)) {
+			
+			if(!cuidadoBorraNumRegion(tablero,fila,col,numero)){
 					annadeElemento(tablero[fila][j].conjunto, numero);
-				}
+				
 			}
 
 			
@@ -325,6 +324,28 @@ bool cuidadoBorraNumCol(tTablero & tablero, int fila, int col,int numero) {
 
 bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 
+	bool posibleFallo = false;
+	int i = 0;
+	int j = 0 ;
 
-	return 0;
+	while (!posibleFallo && i < col +3) { // fallo de fila 
+
+		if (tablero[fila][i].numero == numero) {
+			posibleFallo = true;
+
+		}
+		i++;
+
+	}
+	while (!posibleFallo && j < fila + 3) { // fallo de columna 
+
+		if (tablero[j][col].numero == numero) {
+			posibleFallo = true;
+
+		}
+		j++;
+
+	}
+
+	return posibleFallo;
 }

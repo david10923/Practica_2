@@ -54,7 +54,7 @@ void mostrar(const tListaSudokus & lista) {
 
 	int i = 0;
 
-	//while (lista.sudoku[i].nombreArchivo  != " " && i < lista.cont) {
+	
 	while (i < lista.cont) {
 		cout << lista.sudoku[i].nombreArchivo << " " << lista.sudoku[i].puntos << endl;		
 		i++;
