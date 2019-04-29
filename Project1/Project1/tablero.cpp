@@ -15,13 +15,7 @@ void actualizaRegion(tTablero & tablero, int row, int col, int numero) {
 	for (int i = fila; i < fila + 3; i++) {
 		for (int j = columna; j < columna + 3; j++) {
 
-			//if (tablero[i][j].numero != numero);
-
-				borraElemento(tablero[i][j].conjunto, numero);
-
-			
-
-		
+			borraElemento(tablero[i][j].conjunto, numero);
 		}
 	}
 
@@ -235,22 +229,17 @@ bool borrarNum(tTablero & tablero, int fila, int col) {
 
 
 bool tableroLLeno(const tTablero & tablero) {
-	bool lleno = true;
-	int fila = 0; 
-	int columna = 0; 
+	bool lleno = false;
 
-	while (fila < DIM && lleno){
-		while(columna <DIM && lleno){
-
-			if (tablero[fila][columna].estado == vacia) {				
-				lleno = false;
+	for (int i = 0; i < DIM; i++) {
+		for (int j = 0; j < DIM; j++) { // cjto lleno ??
+			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija) {
+				lleno = true;
 
 			}
-			
-			columna++;
+
+
 		}
-		columna = 0;
-		fila++;
 	}
 
 	return lleno;
@@ -285,6 +274,7 @@ void rellenarSimples(tTablero& tablero) {
 
 				actualizaRegion(tablero, i, j, numero); // actualiza los posibles valores de la region 
 				actualizaFilaCol(tablero, i, j, numero);// actualiza las filas y columnas 
+
 
 			}
 		}
@@ -339,7 +329,6 @@ bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 	int j = 0 ;
 
 	while (!posibleFallo && i < col +3) { // fallo de fila 
-<<<<<<< HEAD
 
 		if (tablero[fila][i].numero == numero) {
 			posibleFallo = true;
@@ -353,21 +342,6 @@ bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 		if (tablero[j][col].numero == numero) {
 			posibleFallo = true;
 
-=======
-
-		if (tablero[fila][i].numero == numero) {
-			posibleFallo = true;
-
-		}
-		i++;
-
-	}
-	while (!posibleFallo && j < fila + 3) { // fallo de columna 
-
-		if (tablero[j][col].numero == numero) {
-			posibleFallo = true;
-
->>>>>>> beb89ffe84ad3b3c51fba4f63b13cb1ef3be3364
 		}
 		j++;
 
