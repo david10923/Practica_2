@@ -6,10 +6,11 @@
 #include"jugador.h"
 
 	const int MAX_JUGADORES = 10;
-	
+
+	typedef tJugador tArrayJugador[MAX_JUGADORES];
 
 	typedef struct {
-		tJugador jugadores[MAX_JUGADORES];
+		tArrayJugador jugador;
 		int cont;
 
 	}tListaJugadores;
@@ -21,6 +22,8 @@
 	void puntuarJugador(tListaJugadores & lista, int puntos);
 	bool buscar(const tListaJugadores & lista, std::string id, int & pos);
 	tListaJugadores ordenarPorRanking(const tListaJugadores & lista);
+
+	bool insertar(tListaJugadores & lista, tJugador jugador);
 
 
 

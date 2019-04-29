@@ -249,6 +249,7 @@ bool tableroLLeno(const tTablero & tablero) {
 			
 			columna++;
 		}
+		columna = 0;
 		fila++;
 	}
 
@@ -338,6 +339,7 @@ bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 	int j = 0 ;
 
 	while (!posibleFallo && i < col +3) { // fallo de fila 
+<<<<<<< HEAD
 
 		if (tablero[fila][i].numero == numero) {
 			posibleFallo = true;
@@ -351,6 +353,21 @@ bool cuidadoBorraNumRegion(tTablero & tablero, int fila, int col,int numero) {
 		if (tablero[j][col].numero == numero) {
 			posibleFallo = true;
 
+=======
+
+		if (tablero[fila][i].numero == numero) {
+			posibleFallo = true;
+
+		}
+		i++;
+
+	}
+	while (!posibleFallo && j < fila + 3) { // fallo de columna 
+
+		if (tablero[j][col].numero == numero) {
+			posibleFallo = true;
+
+>>>>>>> beb89ffe84ad3b3c51fba4f63b13cb1ef3be3364
 		}
 		j++;
 

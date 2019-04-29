@@ -47,6 +47,8 @@ int main() {
 	int puntos = 0;
 	string nombre;
 	bool ok = true;
+	
+	cargar(listaJ);
 
 
 	while (opcion != 0) {
@@ -56,10 +58,10 @@ int main() {
 
 		switch (opcion) {
 
+
 		case 1:
 
-			puntos = jugarUnSudoku(juego);
-			cargar(listaJ);
+			puntos = jugarUnSudoku(juego);			
 			mostrar(listaJ);
 			cout << endl;
 			cout << "Estos son los jugadores que estan ya en la lista de jugadores " << endl;
@@ -67,15 +69,13 @@ int main() {
 			cout << endl;		
 			puntuarJugador(listaJ, puntos);			
 
-
 			
 			break;
 		case 2:
 			
 			cout << endl; 
 
-			// al estar ordenada por identificador la lista no hace falta ordenarla  
-			cargar(listaJ);
+			// al estar ordenada por identificador la lista no hace falta ordenarla  			
 			mostrar(listaJ);			
 
 			cout << endl; 
@@ -85,11 +85,9 @@ int main() {
 
 			cout << endl;
 			// si que hay que ordenar la copia de la lista , pero en funcion de los puntos , ya que la lista original esta ordenada por identificador
-			cargar(listaJ);
+			
 			listaCopia = ordenarPorRanking(listaJ);
-			guardar(listaJ);
 			mostrar(listaCopia);			
-
 
 			cout << endl;
 			

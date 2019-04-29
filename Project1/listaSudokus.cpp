@@ -178,28 +178,32 @@ bool registrarSudoku(tListaSudokus & lista) {
 	
 
 	if (buscarFichero(lista, nombre)) {
-		cout << "Existe un sudoku con el mismo nombre ";
+		cout << "Existe un sudoku con el mismo nombre , no se pueden registrar dos sudokus con el mismo nombre" << endl;
+		cout << endl;
 	}
+	else {
 
 		sudoku.nombreArchivo = nombre;
 		sudoku.puntos = puntos;
 
-	if (sudoku.puntos > lista.sudoku[lista.cont-1].puntos) {
-		cout << "El sudoku que vas a introducir tiene mas puntos a obtener que los demas que se encuentran en la lista" << endl;
-		cout << endl; 
-		lista.sudoku[lista.cont].puntos = sudoku.puntos; 
-		lista.sudoku[lista.cont].nombreArchivo = sudoku.nombreArchivo;
-		lista.cont++;
-		guardar(lista);
+		if (sudoku.puntos > lista.sudoku[lista.cont - 1].puntos) {
+			cout << "El sudoku que vas a introducir tiene mas puntos a obtener que los demas que se encuentran en la lista" << endl;
+			cout << endl;
+			lista.sudoku[lista.cont].puntos = sudoku.puntos;
+			lista.sudoku[lista.cont].nombreArchivo = sudoku.nombreArchivo;
+			lista.cont++;
+			guardar(lista);
+
+		}
+		else if (moverLista(lista, sudoku)) {
+			ok = true;
+			guardar(lista);
+
+		}
+
 
 	}
 
-	else if (moverLista(lista, sudoku)) {
-			ok = true; 
-			guardar(lista);
-
-	}				   
-		
 	mostrar(lista);	
 	
 
@@ -235,10 +239,11 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 		mitad = (ini + final) / 2;
 
 		if (lista.sudoku[mitad].puntos == sudoku.puntos){
+			posicion = mitad;
 			encontrado = true;
 
 		}
-		else if (sudoku.puntos < lista.sudoku[mitad].puntos){
+		else if (sudoku.puntos < lista.sudoku[mitad].puntos){		
 			final = mitad - 1;
 
 		}
@@ -246,13 +251,15 @@ int buscarPos(const tListaSudokus & lista, const tSudoku & sudoku) {
 			ini = mitad + 1;
 		}
 
-		if (encontrado)
-			posicion = mitad;
+		if (!encontrado) //en la busqueda normal aparece (encontrado)
+			posicion =ini;
 
 	}
 	return posicion;
 
 }
+
+
 
 bool  operator<(tSudoku izda, tSudoku dcha) {
 

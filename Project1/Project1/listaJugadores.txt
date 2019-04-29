@@ -1,3 +1,4 @@
+5                            1
 Agustin                      2
 Ana                         23
 Belen                       50

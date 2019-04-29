@@ -191,8 +191,9 @@ int jugarUnSudoku(tJuego & juego) {
 				}
 
 				dibujarTablero(juego.tablero);
+				cout << endl;
 
-				if(tableroLLeno(juego.tablero)) {
+				if(tableroLLeno(juego.tablero)) {					
 					ok = false;
 					cout << "Has conseguido rellenar satisfactoriamente el sudoku " << endl;
 					cout << "Has ganado " << juego.sudoku.puntos << "punto(s)";
@@ -242,16 +243,14 @@ int jugarUnSudoku(tJuego & juego) {
 		case 5: //autocompletar celdas simples
 
 			rellenarSimples(juego.tablero);
-			dibujarTablero(juego.tablero);
-
-			cout << juego.tablero[1][0].numero << endl;
-			cout << juego.tablero[2][4].numero << endl; 
-			cout << juego.tablero[2][5].numero << endl;
+			dibujarTablero(juego.tablero);	
+			cout << endl;
+			
 
 			if (tableroLLeno(juego.tablero)) {
-				ok = false;
+				ok = false;				
 				cout << "Has conseguido rellenar satisfactoriamente el sudoku " << endl;
-				cout << "Has ganado " << juego.sudoku.puntos << "punto(s)";
+				cout << "Has ganado " << juego.sudoku.puntos << " punto(s)";
 				cout << endl;
 
 			}
