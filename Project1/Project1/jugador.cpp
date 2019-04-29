@@ -19,7 +19,6 @@ string toString(const tJugador & jugador) {
 
 void modificarJugador(tJugador & jugador, int puntos){
 
-
 	jugador.puntos += puntos;
 
 }

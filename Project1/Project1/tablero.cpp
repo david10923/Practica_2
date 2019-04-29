@@ -229,17 +229,20 @@ bool borrarNum(tTablero & tablero, int fila, int col) {
 
 
 bool tableroLLeno(const tTablero & tablero) {
-	bool lleno = false;
+	bool lleno = true;
+	int i = 0; 
+	int j = 0;
 
-	for (int i = 0; i < DIM; i++) {
-		for (int j = 0; j < DIM; j++) { // cjto lleno ??
-			if (tablero[i][j].estado == rellenada || tablero[i][j].estado == fija) {
-				lleno = true;
+	while(i< DIM && lleno){
+		while(j<DIM && lleno){
+			if (tablero[i][j].estado ==vacia)
+				lleno = false;
 
-			}
-
-
+			j++;
 		}
+		j = 0;
+		i++;
+		
 	}
 
 	return lleno;
