@@ -58,17 +58,9 @@ bool guardar(const tListaJugadores & lista) {
 	if (archivo.is_open()) {
 		ok = true;
 
-		while (i < lista.cont && ok) {
-			/*
-			
-			archivo << lista.jugador[i].id;
-			archivo << " ";
-			archivo << lista.jugador[i].puntos;
-			archivo << endl;
-			*/
+		while (i < lista.cont && ok) {		
 			
 			archivo << toString(lista.jugador[i]);
-			
 
 			i++;
 
@@ -76,7 +68,6 @@ bool guardar(const tListaJugadores & lista) {
 		archivo.close();
 	}
 	return ok;
-
 
 }
 
@@ -87,9 +78,10 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 	bool encontrado = false;
 
 	while (ini <= final && !encontrado) {
-		mitad = final / 2;
+		mitad =(ini + final) / 2;
 
 		if (lista.jugador[mitad].id == id) {
+			posicion = mitad;
 			encontrado = true;
 
 		}
@@ -99,8 +91,8 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 		else {
 			ini = mitad + 1;
 		}
-		if (encontrado) {
-			pos = mitad;
+		if (!encontrado) {
+			pos = ini;
 		}
 
 	}
@@ -110,13 +102,20 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 
 void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invocar despues de ganar un sudoku ? 
 	int pos;
+	bool ok;
 
 	string nombre;
+	tJugador jugador;
 
 	cout << "Introduce el id de un jugador : "; 
 	cin >> nombre;
 
-	if (buscar(lista, nombre, pos)) {
+	jugador.id = nombre;
+	jugador.puntos = puntos;
+
+	ok = buscar(lista, nombre, pos);
+
+	if (ok) {
 
 		//lista.jugador[pos].puntos += puntos;
 		modificarJugador(lista.jugador[pos], puntos);
@@ -127,10 +126,17 @@ void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invo
 	}
 	else {
 
-		lista.jugador[lista.cont].puntos = puntos;
-		lista.jugador[lista.cont].id = nombre;	
-	}
+		if (insertar(lista, jugador)) {
+			cout << "Se ha podido insertar con exito en la lista "<< endl;
 
+		}
+		else {
+			cout << "La lista esta llena, no se puede insertar un jugador nuevo " << endl;}
+		
+
+		
+	}
+	cout << endl;
 	guardar(lista);
 	mostrar(lista);
 
@@ -174,9 +180,33 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 			i++;
 
 		}	
-
-
 	}
 
 	return listaCopia;
 }
+
+
+bool insertar(tListaJugadores & lista, tJugador jugador) {
+	bool ok = true; 
+
+	if (lista.cont == MAX_JUGADORES) {
+		ok = false;
+	}
+	else {
+		int pos = 0;
+		while (pos <lista.cont && lista.jugador[pos] < jugador){
+			pos++;
+
+		}
+		//insertamos en la posicion i(primer mayor o igual)
+		for (int i = lista.cont; i > pos; i--) {
+			lista.jugador[i] = lista.jugador[i - 1];
+		}
+
+		lista.jugador[pos] = jugador;
+		lista.cont++;
+	}
+	return ok;
+
+}
+

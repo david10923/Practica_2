@@ -23,6 +23,8 @@
 	bool buscar(const tListaJugadores & lista, std::string id, int & pos);
 	tListaJugadores ordenarPorRanking(const tListaJugadores & lista);
 
+	bool insertar(tListaJugadores & lista, tJugador jugador);
+
 
 
 
