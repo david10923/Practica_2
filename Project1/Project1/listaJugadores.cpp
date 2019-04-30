@@ -81,7 +81,7 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 		mitad =(ini + final) / 2;
 
 		if (lista.jugador[mitad].id == id) {
-			posicion = mitad;
+			pos = mitad;
 			encontrado = true;
 
 		}

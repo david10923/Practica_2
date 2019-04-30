@@ -2,7 +2,8 @@ Agustin                      2
 Ana                         23
 Belen                       50
 Clara                        8
-David                        1
+David                        2
+Juan                         1
 Lola                        52
 Luis                         5
 Pedro                       40
