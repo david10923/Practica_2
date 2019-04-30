@@ -35,6 +35,8 @@ int menu() {
 
 int main() {
 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	tJuego juego;
 	tSudoku sudoku;
 	tListaSudokus lista;
@@ -114,6 +116,7 @@ int main() {
 
 	}
 
+	borrarListaJugadores(listaJ);
 
 	system("pause");
 	return 0;

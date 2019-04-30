@@ -4,10 +4,13 @@
 #include<string>
 #include<fstream>
 #include<ctype.h>
+#include"checkML.h"
 
 using namespace std;
 
 void creaListaVacia(tListaJugadores & lista) {
+
+	lista.jugador = new tJugadorPtr[MAX_JUGADORES];
 	lista.cont = 0;
 }
 
@@ -23,8 +26,8 @@ bool cargar(tListaJugadores & lista) {
 
 		while (i < MAX_JUGADORES && !archivo.eof()) {
 			
-			archivo >>lista.jugador[i].id;	 
-			archivo >>lista.jugador[i].puntos;
+			archivo >>lista.jugador[i]->id;	 
+			archivo >>lista.jugador[i]->puntos;
 
 			lista.cont++;
 
@@ -42,7 +45,7 @@ void mostrar(const tListaJugadores & lista) {
 	int i = 0;
 
 	while (i < lista.cont) {
-		cout << lista.jugador[i].id << " " << lista.jugador[i].puntos << endl;
+		cout << lista.jugador[i]->id << " " << lista.jugador[i]->puntos << endl;
 		i++;
 	}
 }
@@ -60,7 +63,7 @@ bool guardar(const tListaJugadores & lista) {
 
 		while (i < lista.cont && ok) {		
 			
-			archivo << toString(lista.jugador[i]);
+			archivo << toString(*(lista.jugador[i]));
 
 			i++;
 
@@ -80,12 +83,12 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 	while (ini <= final && !encontrado) {
 		mitad =(ini + final) / 2;
 
-		if (lista.jugador[mitad].id == id) {
+		if (lista.jugador[mitad]->id == id) {
 			pos = mitad;
 			encontrado = true;
 
 		}
-		else if (id < lista.jugador[mitad].id) {
+		else if (id < lista.jugador[mitad]->id) {
 			final = mitad - 1;
 		}
 		else {
@@ -118,7 +121,7 @@ void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invo
 	if (ok) {
 
 		//lista.jugador[pos].puntos += puntos;
-		modificarJugador(lista.jugador[pos], puntos);
+		modificarJugador(*(lista.jugador[pos]), puntos);
 		cout << "Has sumado puntos a un jugador existente de la lista";
 		cout << endl; 
 
@@ -165,12 +168,12 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 		
 		//	if (menor(lista.jugador[j],lista.jugador[j-1])) {	
 			
-				if (listaCopia.jugador[j].puntos > listaCopia.jugador[j - 1].puntos) {
+				if (listaCopia.jugador[j]->puntos > listaCopia.jugador[j - 1]->puntos) {
 					
-					jugador = listaCopia.jugador[j]; // copias el jugador de la lista en un jugador auxiliar 
+					jugador = *(listaCopia.jugador[j]); // copias el jugador de la lista en un jugador auxiliar 
 
 					listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
-					listaCopia.jugador[j - 1] = jugador; 
+					*(listaCopia.jugador[j - 1]) = jugador; 
 					inter = true; 
 
 				}
@@ -194,7 +197,7 @@ bool insertar(tListaJugadores & lista, tJugador jugador) {
 	}
 	else {
 		int pos = 0;
-		while (pos <lista.cont && lista.jugador[pos] < jugador){
+		while (pos <lista.cont && *(lista.jugador[pos]) < jugador){
 			pos++;
 
 		}
@@ -203,10 +206,30 @@ bool insertar(tListaJugadores & lista, tJugador jugador) {
 			lista.jugador[i] = lista.jugador[i - 1];
 		}
 
-		lista.jugador[pos] = jugador;
+		lista.jugador[pos] = new tJugador();
 		lista.cont++;
 	}
 	return ok;
 
 }
+
+
+void ampliar(tListaJugadores & lista); // redimensiona el array al doble de lo que tiene
+
+void borrarListaJugadores(tListaJugadores & lista) {
+
+	delete[] lista.jugador;
+	lista.cont = 0;
+
+	for (int i = 0; i < lista.cont;i++) {
+		delete lista.jugador[i];
+
+	}
+	   
+}
+
+
+
+
+
 

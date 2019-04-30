@@ -11,6 +11,8 @@ typedef struct {
 	int puntos;
 }tJugador;
 
+typedef tJugador *tJugadorPtr;// puntero a jugador 
+
 
 std::string toString(const tJugador & jugador);
 void modificarJugador(tJugador & jugador, int puntos);

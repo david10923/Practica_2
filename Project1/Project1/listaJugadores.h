@@ -7,13 +7,16 @@
 
 	const int MAX_JUGADORES = 10;
 
-	typedef tJugador tArrayJugador[MAX_JUGADORES];
+	/*typedef tJugador tArrayJugador[MAX_JUGADORES];*/
+	
 
 	typedef struct {
-		tArrayJugador jugador;
+		tJugadorPtr *jugador; // array dinamico de datos dinamicos
 		int cont;
-
+		int dimension;
 	}tListaJugadores;
+
+	
 
 	void creaListaVacia(tListaJugadores & lista);
 	bool cargar(tListaJugadores & lista);
@@ -24,7 +27,11 @@
 	tListaJugadores ordenarPorRanking(const tListaJugadores & lista);
 
 	bool insertar(tListaJugadores & lista, tJugador jugador);
-
+	
+	//VERSION 3
+	 
+	void ampliar(tListaJugadores & lista); // redimensiona el array al doble de lo que tiene
+	void borrarListaJugadores(tListaJugadores & lista);// libera la memoria usada por la lista 
 
 
 

@@ -38,6 +38,7 @@
   <ItemGroup>
     <ClInclude Include="casilla.h" />
     <ClInclude Include="conjunto.h" />
+    <ClInclude Include="checkML.h" />
     <ClInclude Include="juego.h" />
     <ClInclude Include="jugador.h" />
     <ClInclude Include="listaJugadores.h" />
