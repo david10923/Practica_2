@@ -44,6 +44,7 @@ int main() {
 
 	listaJ.cont = 0; 
 	lista.cont = 0;
+	listaJ.dimension = MAX_JUGADORES;
 
 	int opcion = 1;
 	int puntos = 0;
@@ -77,7 +78,7 @@ int main() {
 			
 			cout << endl; 
 
-			// al estar ordenada por identificador la lista no hace falta ordenarla  			
+			cargar(listaJ);// al estar ordenada por identificador la lista no hace falta ordenarla  			
 			mostrar(listaJ);			
 
 			cout << endl; 
@@ -109,6 +110,8 @@ int main() {
 		default:
 
 			cout << "Has elegido la opcion de salir del juego " << endl;
+			borrarListaJugadores(listaJ);
+
 		}
 
 		cout << "--------------------------------------------" << endl; 
@@ -116,8 +119,7 @@ int main() {
 
 	}
 
-	borrarListaJugadores(listaJ);
-
+	
 	system("pause");
 	return 0;
 }

@@ -1,10 +1,9 @@
-Agustin                      2
+Agustin                      5
+Alejandro                    2
 Ana                         23
 Belen                       50
 Clara                        8
-David                        2
+David                        4
+Guille                       2
+Javier                       1
 Juan                         1
-Lola                        52
-Luis                         5
-Pedro                       40
-Yoli                         5

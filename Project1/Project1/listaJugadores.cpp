@@ -9,8 +9,13 @@
 using namespace std;
 
 void creaListaVacia(tListaJugadores & lista) {
+	   
+	lista.jugador = new tJugadorPtr[lista.dimension];
 
-	lista.jugador = new tJugadorPtr[MAX_JUGADORES];
+	for (int i = 0; i < lista.dimension;i++) {
+		lista.jugador[i] = new tJugador;
+
+	}
 	lista.cont = 0;
 }
 
@@ -62,7 +67,7 @@ bool guardar(const tListaJugadores & lista) {
 		ok = true;
 
 		while (i < lista.cont && ok) {		
-			
+		
 			archivo << toString(*(lista.jugador[i]));
 
 			i++;
@@ -75,13 +80,13 @@ bool guardar(const tListaJugadores & lista) {
 }
 
 
-bool buscar(const tListaJugadores & lista, string id, int & pos) {
+bool buscar(const tListaJugadores & lista, string id, int ini, int fin, int & pos) {
 
-	int mitad, posicion = -1, final = lista.cont - 1, ini = 0;
+	//int mitad, posicion = -1;
 	bool encontrado = false;
 
-	while (ini <= final && !encontrado) {
-		mitad =(ini + final) / 2;
+	if (ini <= fin) {
+		int mitad =(ini + fin) / 2;
 
 		if (lista.jugador[mitad]->id == id) {
 			pos = mitad;
@@ -89,10 +94,11 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 
 		}
 		else if (id < lista.jugador[mitad]->id) {
-			final = mitad - 1;
+			encontrado = buscar(lista, id,ini,mitad-1,pos);
 		}
 		else {
-			ini = mitad + 1;
+			encontrado = buscar(lista, id, mitad + 1 ,fin, pos);
+			
 		}
 		if (!encontrado) {
 			pos = ini;
@@ -105,7 +111,7 @@ bool buscar(const tListaJugadores & lista, string id, int & pos) {
 
 void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invocar despues de ganar un sudoku ? 
 	int pos;
-	bool ok;
+	bool ok = false;
 
 	string nombre;
 	tJugador jugador;
@@ -116,7 +122,7 @@ void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invo
 	jugador.id = nombre;
 	jugador.puntos = puntos;
 
-	ok = buscar(lista, nombre, pos);
+	ok = buscar(lista, nombre,0, lista.cont-1 ,pos);
 
 	if (ok) {
 
@@ -133,8 +139,11 @@ void puntuarJugador(tListaJugadores & lista, int puntos) { // se tendra que invo
 			cout << "Se ha podido insertar con exito en la lista "<< endl;
 
 		}
-		else {
-			cout << "La lista esta llena, no se puede insertar un jugador nuevo " << endl;}
+
+		/*else {
+			cout << "La lista esta llena, no se puede insertar un jugador nuevo " << endl;
+		}
+		*/
 		
 
 		
@@ -172,7 +181,7 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 					
 					jugador = *(listaCopia.jugador[j]); // copias el jugador de la lista en un jugador auxiliar 
 
-					listaCopia.jugador[j] = listaCopia.jugador[j - 1]; 
+					*(listaCopia.jugador[j]) = *(listaCopia.jugador[j - 1]); 
 					*(listaCopia.jugador[j - 1]) = jugador; 
 					inter = true; 
 
@@ -189,42 +198,83 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 }
 
 
-bool insertar(tListaJugadores & lista, tJugador jugador) {
+bool insertar(tListaJugadores & lista, tJugador jugador) {// hay que cambiarlo 
 	bool ok = true; 
+	int pos = 0;
 
 	if (lista.cont == MAX_JUGADORES) {
-		ok = false;
-	}
-	else {
-		int pos = 0;
-		while (pos <lista.cont && *(lista.jugador[pos]) < jugador){
+
+		ampliar(lista);
+		 
+	}	
+		
+	while (pos <lista.cont && *(lista.jugador[pos]) < jugador){
 			pos++;
 
-		}
-		//insertamos en la posicion i(primer mayor o igual)
-		for (int i = lista.cont; i > pos; i--) {
-			lista.jugador[i] = lista.jugador[i - 1];
-		}
-
-		lista.jugador[pos] = new tJugador();
-		lista.cont++;
 	}
+	
+	//ok = buscar(lista, lista.jugador[pos]->id, 0, lista.cont-1, pos);
+
+	//insertamos en la posicion i(primer mayor o igual)
+	for (int i = lista.cont; i > pos; i--) {
+		*(lista.jugador[i]) = *(lista.jugador[i - 1]);
+	}
+
+	lista.jugador[pos] = new tJugador(jugador);
+	lista.cont++;
+
+	guardar(lista);
 	return ok;
 
 }
 
 
-void ampliar(tListaJugadores & lista); // redimensiona el array al doble de lo que tiene
+void ampliar(tListaJugadores & lista) {
+
+	tListaJugadores Aux; 
+
+	Aux.dimension = lista.dimension; 
+
+	creaListaVacia(Aux);
+
+	Aux.cont = lista.cont;
+
+	for (int i = 0; i < lista.cont; i++) {
+		Aux.jugador[i]->id = lista.jugador[i]->id;
+		Aux.jugador[i]->puntos = lista.jugador[i]->puntos;
+
+	}
+
+	borrarListaJugadores(lista);
+
+	lista.dimension = lista.dimension * 2;
+
+	creaListaVacia(lista);
+
+	lista.cont = Aux.cont;
+
+	for (int i = 0; i < lista.cont; i++) {
+		lista.jugador[i]->id = Aux.jugador[i]->id;
+		lista.jugador[i]->puntos = Aux.jugador[i]->puntos;
+	}
+
+	borrarListaJugadores(Aux);
+
+}
+
+	
 
 void borrarListaJugadores(tListaJugadores & lista) {
 
-	delete[] lista.jugador;
-	lista.cont = 0;
 
-	for (int i = 0; i < lista.cont;i++) {
+	for (int i = 0; i < lista.cont; i++) {
 		delete lista.jugador[i];
 
 	}
+
+	delete[] lista.jugador;
+	//lista.cont = 0;
+
 	   
 }
 

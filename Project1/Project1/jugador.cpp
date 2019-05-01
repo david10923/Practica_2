@@ -12,7 +12,7 @@ string toString(const tJugador & jugador) {
 	stringstream jugador1;
 
 
-	jugador1 << setw(20) << left << jugador.id << setw(10) << right << jugador.puntos << endl;
+	jugador1 << setw(20) << left << jugador.id << setw(10) << right << jugador.puntos<< endl;
 
 	return jugador1.str();
 	

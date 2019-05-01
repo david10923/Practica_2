@@ -122,7 +122,7 @@ int jugarUnSudoku(tJuego & juego) {
 
 	while (opcion2 != 0 && ok == true) {
 
-
+		
 		opcion2 = menu2();
 
 		switch (opcion2) {
@@ -177,8 +177,7 @@ int jugarUnSudoku(tJuego & juego) {
 								cout << "Se ha podido introducir con exito el numero " << endl;
 								cout << endl;
 							}
-
-
+							
 						}
 						else {
 							cout << "El numero es incorrecto , no pertence al rango descrito anteriormente" << endl;
@@ -197,7 +196,7 @@ int jugarUnSudoku(tJuego & juego) {
 				if(tableroLLeno(juego.tablero)) {					
 					ok = false;
 					cout << "Has conseguido rellenar satisfactoriamente el sudoku " << endl;
-					cout << "Has ganado " << juego.sudoku.puntos << "punto(s)";
+					cout << "Has ganado " << juego.sudoku.puntos << "punto(s)";			
 
 				}
 				cout << endl;
