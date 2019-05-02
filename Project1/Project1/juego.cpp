@@ -82,6 +82,7 @@ int jugarUnSudoku(tJuego & juego) {
 
 
 		mostrar(sudokuLista);
+		cout << endl;
 
 		if (cargarSudoku(sudokuLista, juego.sudoku)) {
 

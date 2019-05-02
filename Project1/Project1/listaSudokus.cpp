@@ -56,8 +56,8 @@ void mostrar(const tListaSudokus & lista) {
 	int i = 0;
 
 	
-	while (i < lista.cont) {
-		cout << lista.sudoku[i].nombreArchivo << " " << lista.sudoku[i].puntos << endl;		
+	while (i < lista.cont) {	
+		cout << setw(10) << "ID sudoku :" <<  lista.sudoku[i].nombreArchivo << left << "    " << "Puntos: "<< lista.sudoku[i].puntos << right << endl;		
 		i++;
 	}
 
@@ -70,9 +70,8 @@ bool cargarSudoku(const tListaSudokus & lista, tSudoku & sudoku) {
 	int i = 0;
 
 	cout << "Introduce el nombre del sudoku al que quieres jugar  y los puntos del sudoku : ";
-	//cin >> sudoku.nombreArchivo >> sudoku.puntos;
-	sudoku.nombreArchivo = "sudoku1.txt";
-	sudoku.puntos = 1;
+	cin >> sudoku.nombreArchivo >> sudoku.puntos;
+	
 	cout << endl;
 
 

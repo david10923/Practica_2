@@ -13,7 +13,9 @@ int menu() {
 	int opcion;
 
 	do {
-		cout << "ESTE ES EL JUEGO DEL SUDOKU " << endl;
+		colorFondo(4);
+		cout << "ESTE ES EL JUEGO DEL SUDOKU " << endl;		
+		colorFondo(0);
 		cout << "-------------------------------------------" << endl;
 
 		cout << "1.-Jugar" << endl;
