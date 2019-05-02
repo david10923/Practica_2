@@ -29,14 +29,19 @@ bool cargar(tListaJugadores & lista) {
 	if (archivo.is_open()) {
 		ok = true;
 
-		while (i < MAX_JUGADORES && !archivo.eof()) {
-			
+		while (i < lista.dimension && !archivo.eof()) {
+
+	
 			archivo >>lista.jugador[i]->id;	 
 			archivo >>lista.jugador[i]->puntos;
 
 			lista.cont++;
 
 			i++;
+			
+			if (lista.cont == lista.dimension) {
+				ampliar(lista);
+			}
 		}
 
 		archivo.close();

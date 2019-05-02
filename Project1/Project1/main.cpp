@@ -46,7 +46,7 @@ int main() {
 
 	listaJ.cont = 0; 
 	lista.cont = 0;
-	listaJ.dimension = MAX_JUGADORES;
+	listaJ.dimension = 5;
 
 	int opcion = 1;
 	int puntos = 0;
