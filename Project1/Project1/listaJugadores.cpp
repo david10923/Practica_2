@@ -71,9 +71,14 @@ bool guardar(const tListaJugadores & lista) {
 	if (archivo.is_open()) {
 		ok = true;
 
-		while (i < lista.cont && ok) {		
+		while (i < lista.cont  && ok) {		
 		
 			archivo << toString(*(lista.jugador[i]));
+
+			if (i < lista.cont -1) {
+				archivo << endl;
+
+			}
 
 			i++;
 
