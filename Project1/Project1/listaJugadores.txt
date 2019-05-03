@@ -3,7 +3,7 @@ Alejandro                    2
 Ana                         23
 Belen                       50
 Clara                        8
-David                        4
+David                        5
 Guille                       2
 Javier                       1
 Juan                         1

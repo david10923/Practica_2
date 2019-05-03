@@ -184,10 +184,11 @@ tListaJugadores ordenarPorRanking(const tListaJugadores & lista) {
 
 		for (int j = lista.cont - 1; j > 0; j--) {
 
+
+			//if (listaCopia.jugador[j]->puntos > listaCopia.jugador[j - 1]->puntos) {	
 		
-		//	if (menor(lista.jugador[j],lista.jugador[j-1])) {	
 			
-				if (listaCopia.jugador[j]->puntos > listaCopia.jugador[j - 1]->puntos) {
+				if (!menor(*lista.jugador[j], *lista.jugador[j - 1])) {
 					
 					jugador = *(listaCopia.jugador[j]); // copias el jugador de la lista en un jugador auxiliar 
 
